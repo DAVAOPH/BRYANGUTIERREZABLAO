@@ -227,6 +227,20 @@
     .references div {
       margin-bottom: 10px;
     }
+
+    .details input[type="text"], .details textarea {
+      display: none;
+    }
+
+    .details.editing input[type="text"],
+    .details.editing textarea {
+      display: block;
+    }
+
+    .details.editing label {
+      display: block;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -247,16 +261,16 @@
 
 <div class="container">
   <div class="top-section">
-    <div class="details">
+    <div class="details" id="details">
       <h2>Bryan Gutierrez Ablao</h2>
-      <label>Current Address:</label>
-      <input type="text" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City" disabled>
-      <label>Email:</label>
-      <input type="text" value="ablaobryan4400@gmail.com" disabled>
-      <label>Contact Number:</label>
-      <input type="text" value="#09928760990" disabled>
-      <label>Objective:</label>
-      <textarea rows="4" disabled>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
+      <label for="address">Current Address:</label>
+      <input type="text" id="address" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City" disabled>
+      <label for="email">Email:</label>
+      <input type="text" id="email" value="ablaobryan4400@gmail.com" disabled>
+      <label for="contact">Contact Number:</label>
+      <input type="text" id="contact" value="#09928760990" disabled>
+      <label for="objective">Objective:</label>
+      <textarea id="objective" rows="4" disabled>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
     </div>
     <div class="profile-img">
       <img src="assets/bryan.jpg" alt="Profile Picture">
@@ -268,15 +282,13 @@
   <div class="flex-row">
     <div>Birthdate</div><div>April 04, 2000</div>
     <div>Birthplace</div><div>Jose Fabella Metro Manila Hospital</div>
-    <div>Civil Status</div><div><input type="text" value="Single" disabled></div>
+    <div>Civil Status</div><div>Single</div>
     <div>Citizenship</div><div>Filipino</div>
-    <div>Religion</div><div><input type="text" value="Christian" disabled></div>
+    <div>Religion</div><div>Christian</div>
     <div>Gender</div><div>Male</div>
     <div>Father’s Name</div><div>Evaristo C. Ablao (Deceased)</div>
     <div>Mother’s Name</div><div>Annalie G. Ablao (Deceased)</div>
   </div>
-
-  <hr>
 
   <h3>Educational Background</h3>
   <table>
@@ -285,8 +297,6 @@
     <tr><td>Junior High School</td><td>Sta Ana National High School</td><td>S.Y. 2016</td></tr>
     <tr><td>Elementary</td><td>Sta Ana Elementary School</td><td>S.Y. 2012</td></tr>
   </table>
-
-  <hr>
 
   <h3>Work Experience</h3>
   <table>
@@ -330,10 +340,14 @@
   }
 
   function toggleEdit(btn) {
-    const inputs = document.querySelectorAll('input[type="text"], textarea');
+    const details = document.getElementById('details');
     const isEditing = btn.textContent === 'Save';
 
+    details.classList.toggle('editing');
+
+    const inputs = details.querySelectorAll('input[type="text"], textarea');
     inputs.forEach(el => el.disabled = isEditing);
+
     btn.textContent = isEditing ? 'Edit' : 'Save';
   }
 </script>
