@@ -16,6 +16,7 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
       color: #333;
+      padding: 10px;
     }
 
     header {
@@ -25,9 +26,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
 
     .logo {
@@ -90,48 +88,86 @@
     }
 
     .container {
-      max-width: 900px;
-      margin: 30px auto;
+      max-width: 1000px;
+      margin: 20px auto;
       padding: 20px;
       background: white;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    h1 {
+    .top-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-img {
+      flex: 1;
       text-align: center;
-      margin-bottom: 20px;
     }
 
-    .resume-info {
-      text-align: center;
+    .profile-img img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
     }
 
-    .resume-info img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin-bottom: 15px;
+    .details {
+      flex: 2;
     }
 
-    .info p {
-      margin: 5px 0;
+    .details p {
+      margin: 10px 0;
     }
 
-    .socials {
-      margin-top: 15px;
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
 
-    .socials a {
-      margin: 0 10px;
-      font-size: 20px;
-      color: #2a3d66;
-      text-decoration: none;
+    hr {
+      border: none;
+      border-top: 2px solid #333;
+      margin: 20px 0;
+    }
+
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .flex-row > div {
+      flex: 1 1 45%;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table td {
+      padding: 10px;
+      border: 1px solid #ccc;
     }
 
     .download-btn {
-      display: inline-block;
-      margin-top: 15px;
+      display: block;
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .download-btn a {
       padding: 10px 20px;
       background-color: #2a3d66;
       color: white;
@@ -139,57 +175,109 @@
       border-radius: 5px;
     }
 
-    .download-btn:hover {
+    .download-btn a:hover {
       background-color: #1a2a47;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="assets/profile.jpg" alt="Profile">
-      <span>Bryan Gutierrez Ablao</span>
+<header>
+  <div class="logo">
+    <img src="assets/bryan.jpg" alt="Profile">
+    <span>Bryan Gutierrez Ablao</span>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <nav id="nav">
+    <a href="index.html">Profile</a>
+    <a href="about.html">About Me</a>
+    <a href="life.html">Life Update</a>
+    <a href="contact.html">Contact Me</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="top-section">
+    <div class="details">
+      <h2>Bryan Gutierrez Ablao</h2>
+      <label>Current Address:</label>
+      <input type="text" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City">
+      <label>Email:</label>
+      <input type="text" value="ablaobryan4400@gmail.com">
+      <label>Contact Number:</label>
+      <input type="text" value="#09928760990">
+      <label>Objective:</label>
+      <textarea rows="4">To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
     </div>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <nav id="nav">
-      <a href="index.html">Profile</a>
-      <a href="about.html">About Me</a>
-      <a href="life.html">Life Update</a>
-      <a href="contact.html">Contact Me</a>
-    </nav>
-  </header>
-
-  <div class="container">
-    <h1>My Resume</h1>
-    <div class="resume-info">
-      <img src="assets/profile.jpg" alt="Bryan">
-      <div class="info">
-        <p><strong>Full Name:</strong> Bryan Gutierrez Ablao</p>
-        <p><strong>Address:</strong> Super Block 2 Baranggay 22-C Piape Boulevard Davao City</p>
-        <p><strong>Email:</strong> ablaobryan4400@gmail.com</p>
-        <p><strong>LinkedIn:</strong> [Your LinkedIn URL]</p>
-        <p><strong>Contact No.:</strong> 09928760990</p>
-      </div>
-      <div class="socials">
-  <a href="https://facebook.com/bryangablao" target="_blank">
-    <img src="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/facebook.png" alt="Facebook" width="30">
-  </a>
-  <a href="mailto:ablaobryan4400@gmail.com">
-    <img src="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/gmail.png" alt="Gmail" width="30">
-  </a>
-  <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank">
-    <img src="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/linkedin.png" alt="LinkedIn" width="30">
-  </a>
-  <a href="Contact #: 09928760990">
-    <img src="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/contact-information.png" alt="Contact Number" width="30">
-  </a>
-</div>
-
-      <a class="download-btn" href="your-resume.pdf" download>Download Resume</a>
+    <div class="profile-img">
+      <img src="assets/profile.jpg" alt="Profile Picture">
     </div>
   </div>
 
-  <script src="index.js"></script>
+  <hr>
+
+  <div class="flex-row">
+    <div>Birthdate</div>
+    <div>April 04, 2000</div>
+    <div>Birthplace</div>
+    <div>Jose Fabella Metro Manila Hospital</div>
+    <div>Civil Status</div>
+    <div><input type="text" value="Single"></div>
+    <div>Citizenship</div>
+    <div>Filipino</div>
+    <div>Religion</div>
+    <div><input type="text" value="Christian"></div>
+    <div>Gender</div>
+    <div>Male</div>
+    <div>Father’s Name</div>
+    <div>Evaristo C. Ablao (Deceased)</div>
+    <div>Mother’s Name</div>
+    <div>Annalie G. Ablao (Deceased)</div>
+  </div>
+
+  <h3>Educational Background</h3>
+  <table>
+    <tr><td>College</td><td>Holy Cross of Davao College</td><td>(Under Graduate)</td></tr>
+    <tr><td>Senior High School</td><td>Samson Polytechnic College of Davao</td><td>S.Y. 2018</td></tr>
+    <tr><td>Junior High School</td><td>Sta Ana National High School</td><td>S.Y. 2016</td></tr>
+    <tr><td>Elementary</td><td>Sta Ana Elementary School</td><td>S.Y. 2012</td></tr>
+  </table>
+
+  <h3>Work Experience</h3>
+  <table>
+    <tr><td>Call Center Agent</td><td>sixeleven</td><td>Jan. 2025 to Current</td></tr>
+    <tr><td>Encoder</td><td>Gmall Buhangin Warehouse</td><td>Feb. 2022 to Jan. 2023</td></tr>
+    <tr><td>Production Staff</td><td>Kc & Arc Prints</td><td>Oct. 2018 to Jan. 2022</td></tr>
+    <tr><td>Kitchen Crew</td><td>Chowking SPMC</td><td>June 2018 to Sept. 2018</td></tr>
+  </table>
+
+  <h3>Skills</h3>
+  <ul>
+    <li>Communication</li>
+    <li>Leadership</li>
+    <li>Microsoft Office</li>
+    <li>Problem Solving</li>
+    <li>Time Management</li>
+    <li>Web Development</li>
+  </ul>
+
+  <h3>Character References</h3>
+  <table>
+    <tr><td>Mr. Thomas Wilkinson</td><td>Leader of Church</td><td>09666829663</td></tr>
+    <tr><td>Kenneth G. Ablao</td><td>Call Center Agent</td><td>09928760990</td></tr>
+  </table>
+
+  <div class="download-btn">
+    <a href="your-resume.pdf" download>Download Resume</a>
+  </div>
+</div>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById('nav');
+  nav.classList.toggle('active');
+}
+</script>
+
 </body>
 </html>
