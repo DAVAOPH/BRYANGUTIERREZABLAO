@@ -244,6 +244,24 @@
       display: block;
       margin-top: 10px;
     }
+
+        .view-mode input[type="text"],
+    .view-mode textarea {
+      border: none;
+      background: none;
+      pointer-events: none;
+      padding: 0;
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .view-mode input[type="text"]:disabled,
+    .view-mode textarea:disabled {
+      background: none;
+      color: #333;
+    }
+
   </style>
 </head>
 <body>
@@ -265,16 +283,27 @@
 <div class="container">
   <div class="top-section">
     <div class="details" id="details">
-      <h2>Bryan Gutierrez Ablao</h2>
-      <label for="address">Current Address:</label>
-      <input type="text" id="address" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City" disabled>
-      <label for="email">Email:</label>
-      <input type="text" id="email" value="ablaobryan4400@gmail.com" disabled>
-      <label for="contact">Contact Number:</label>
-      <input type="text" id="contact" value="#09928760990" disabled>
-      <label for="objective">Objective:</label>
-      <textarea id="objective" rows="4" disabled>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
-    </div>
+  <h2>Bryan Gutierrez Ablao</h2>
+
+  <label for="address">Current Address:</label>
+  <p class="view-mode" id="address-view">Super Block 2 Baranggay 22 - C Piape Boulevard Davao City</p>
+  <input type="text" id="address" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City" style="display:none;">
+
+  <label for="email">Email:</label>
+  <p class="view-mode" id="email-view">ablaobryan4400@gmail.com</p>
+  <input type="text" id="email" value="ablaobryan4400@gmail.com" style="display:none;">
+
+  <label for="contact">Contact Number:</label>
+  <p class="view-mode" id="contact-view">#09928760990</p>
+  <input type="text" id="contact" value="#09928760990" style="display:none;">
+
+  <label for="objective">Objective:</label>
+  <p class="view-mode" id="objective-view">
+    To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.
+  </p>
+  <textarea id="objective" rows="4" style="display:none;">To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
+</div>
+
     <div class="profile-img">
       <img src="assets/bryan.jpg" alt="Profile Picture">
     </div>
@@ -343,17 +372,28 @@
   }
 
   function toggleEdit(btn) {
-    const details = document.getElementById('details');
     const isEditing = btn.textContent === 'Save';
-
-    details.classList.toggle('editing');
-
-    const inputs = details.querySelectorAll('input[type="text"], textarea');
-    inputs.forEach(el => el.disabled = isEditing);
-
     btn.textContent = isEditing ? 'Edit' : 'Save';
+
+    // Toggle input/textareas and p views
+    ['address', 'email', 'contact', 'objective'].forEach(id => {
+      const input = document.getElementById(id);
+      const view = document.getElementById(id + '-view');
+
+      if (isEditing) {
+        // Save mode: copy value to view and hide input
+        view.textContent = input.value;
+        input.style.display = 'none';
+        view.style.display = 'block';
+      } else {
+        // Edit mode: show input with current value
+        input.style.display = 'block';
+        view.style.display = 'none';
+      }
+    });
   }
 </script>
+
 
 </body>
 </html>
