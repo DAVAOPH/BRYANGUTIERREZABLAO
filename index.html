@@ -1,11 +1,11 @@
-<!-- Replace your existing HTML with this one -->
+<!-- FINAL UPDATED HTML CODE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resume - Bryan Gutierrez Ablao</title>
-  <link rel="icon" type="image/jpg" href="assets/profile.jpg">
+  <link rel="icon" type="image/jpg" href="assets/profile.jpg" />
   <style>
     * {
       margin: 0;
@@ -151,7 +151,7 @@
     hr {
       border: none;
       border-top: 2px solid #333;
-      margin: 20px 0;
+      margin: 30px 0 20px;
     }
 
     .flex-row {
@@ -180,18 +180,18 @@
     }
 
     h3 {
-      margin-top: 30px;
+      margin-bottom: 10px;
     }
 
     ul {
-      margin-left: 20px;
+      list-style: square inside;
     }
 
     .download-btn {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     .download-btn a, .download-btn button {
@@ -206,6 +206,26 @@
 
     .download-btn a:hover, .download-btn button:hover {
       background-color: #1a2a47;
+    }
+
+    .skills-references {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .skills, .references {
+      flex: 1 1 45%;
+      margin-bottom: 20px;
+    }
+
+    .references {
+      text-align: right;
+    }
+
+    .references div {
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -246,23 +266,17 @@
   <hr>
 
   <div class="flex-row">
-    <div>Birthdate</div>
-    <div>April 04, 2000</div>
-    <div>Birthplace</div>
-    <div>Jose Fabella Metro Manila Hospital</div>
-    <div>Civil Status</div>
-    <div><input type="text" value="Single" disabled></div>
-    <div>Citizenship</div>
-    <div>Filipino</div>
-    <div>Religion</div>
-    <div><input type="text" value="Christian" disabled></div>
-    <div>Gender</div>
-    <div>Male</div>
-    <div>Father’s Name</div>
-    <div>Evaristo C. Ablao (Deceased)</div>
-    <div>Mother’s Name</div>
-    <div>Annalie G. Ablao (Deceased)</div>
+    <div>Birthdate</div><div>April 04, 2000</div>
+    <div>Birthplace</div><div>Jose Fabella Metro Manila Hospital</div>
+    <div>Civil Status</div><div><input type="text" value="Single" disabled></div>
+    <div>Citizenship</div><div>Filipino</div>
+    <div>Religion</div><div><input type="text" value="Christian" disabled></div>
+    <div>Gender</div><div>Male</div>
+    <div>Father’s Name</div><div>Evaristo C. Ablao (Deceased)</div>
+    <div>Mother’s Name</div><div>Annalie G. Ablao (Deceased)</div>
   </div>
+
+  <hr>
 
   <h3>Educational Background</h3>
   <table>
@@ -272,6 +286,8 @@
     <tr><td>Elementary</td><td>Sta Ana Elementary School</td><td>S.Y. 2012</td></tr>
   </table>
 
+  <hr>
+
   <h3>Work Experience</h3>
   <table>
     <tr><td>Call Center Agent</td><td>sixeleven</td><td>Jan. 2025 to Current</td></tr>
@@ -280,21 +296,26 @@
     <tr><td>Kitchen Crew</td><td>Chowking SPMC</td><td>June 2018 to Sept. 2018</td></tr>
   </table>
 
-  <h3>Skills</h3>
-  <ul>
-    <li>Communication</li>
-    <li>Leadership</li>
-    <li>Microsoft Office</li>
-    <li>Problem Solving</li>
-    <li>Time Management</li>
-    <li>Web Development</li>
-  </ul>
+  <hr>
 
-  <h3>Character References</h3>
-  <table>
-    <tr><td>Mr. Thomas Wilkinson</td><td>Leader of Church</td><td>09666829663</td></tr>
-    <tr><td>Kenneth G. Ablao</td><td>Call Center Agent</td><td>09928760990</td></tr>
-  </table>
+  <div class="skills-references">
+    <div class="skills">
+      <h3>Skills</h3>
+      <ul>
+        <li>Communication</li>
+        <li>Leadership</li>
+        <li>Microsoft Office</li>
+        <li>Problem Solving</li>
+        <li>Time Management</li>
+        <li>Web Development</li>
+      </ul>
+    </div>
+    <div class="references">
+      <h3>Character References</h3>
+      <div><strong>Mr. Thomas Wilkinson</strong><br>Leader of Church<br>09666829663</div>
+      <div><strong>Kenneth G. Ablao</strong><br>Call Center Agent<br>09928760990</div>
+    </div>
+  </div>
 
   <div class="download-btn">
     <a href="your-resume.pdf" download>Download Resume</a>
@@ -303,21 +324,18 @@
 </div>
 
 <script>
-function toggleMenu() {
-  const nav = document.getElementById('nav');
-  nav.classList.toggle('active');
-}
+  function toggleMenu() {
+    const nav = document.getElementById('nav');
+    nav.classList.toggle('active');
+  }
 
-function toggleEdit(btn) {
-  const inputs = document.querySelectorAll('input[type="text"], textarea');
-  const isEditing = btn.textContent === 'Save';
+  function toggleEdit(btn) {
+    const inputs = document.querySelectorAll('input[type="text"], textarea');
+    const isEditing = btn.textContent === 'Save';
 
-  inputs.forEach(el => el.disabled = isEditing);
-
-  btn.textContent = isEditing ? 'Edit' : 'Save';
-
-  // Optional: you can implement saving logic here (e.g. store in localStorage or Firebase)
-}
+    inputs.forEach(el => el.disabled = isEditing);
+    btn.textContent = isEditing ? 'Edit' : 'Save';
+  }
 </script>
 
 </body>
