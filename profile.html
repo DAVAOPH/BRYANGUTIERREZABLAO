@@ -1,92 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bryan Gutierrez Ablao</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/profile.jpg" type="image/jpg" />
-  <script src="scripts.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bryan Gutierrez Ablao - Resume</title>
+  <link rel="icon" type="image/jpg" href="assets/profile.jpg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #2a3d66;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .logo span {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .hamburger {
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: #2a3d66;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 10px 20px;
+      }
+
+      nav.active {
+        display: flex;
+      }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .resume-info {
+      text-align: center;
+    }
+
+    .resume-info img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .info p {
+      margin: 5px 0;
+    }
+
+    .socials {
+      margin-top: 15px;
+    }
+
+    .socials a {
+      margin: 0 10px;
+      font-size: 20px;
+      color: #2a3d66;
+      text-decoration: none;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #2a3d66;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .download-btn:hover {
+      background-color: #1a2a47;
+    }
+  </style>
 </head>
 <body>
+
   <header>
     <div class="logo">
-      <img src="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/profile.jpg" alt="Favicon">
+      <img src="assets/profile.jpg" alt="Profile">
       <span>Bryan Gutierrez Ablao</span>
     </div>
-    <button id="hamburger">☰</button>
-    <nav id="nav-menu">
-      <a href="#profile">Profile</a>
-      <a href="#about">About Me</a>
-      <a href="#life">Life Update</a>
-      <a href="#contact">Contact Me</a>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <nav id="nav">
+      <a href="profile.html">Profile</a>
+      <a href="about.html">About Me</a>
+      <a href="life.html">Life Update</a>
+      <a href="contact.html">Contact Me</a>
     </nav>
   </header>
 
-  <main>
-    <!-- Profile Section -->
-    <section id="profile">
-      <div class="resume-header">
-        <h1>My Resume</h1>
-        <a href="assets/BRYAN_ABLAO_RESUME.pdf" download class="download-btn">Download Resume</a>
+  <div class="container">
+    <h1>My Resume</h1>
+    <div class="resume-info">
+      <img src="assets/profile.jpg" alt="Bryan">
+      <div class="info">
+        <p><strong>Full Name:</strong> Bryan Gutierrez Ablao</p>
+        <p><strong>Address:</strong> [Your Current Address]</p>
+        <p><strong>Email:</strong> [Your Email]</p>
+        <p><strong>LinkedIn:</strong> [Your LinkedIn URL]</p>
+        <p><strong>Contact No.:</strong> [Your Contact Number]</p>
       </div>
-      <div class="profile-content">
-        <img src="assets/profile.jpg" alt="Profile Picture" class="profile-pic">
-        <h2>Bryan Gutierrez Ablao</h2>
-        <p>Current Address: Super Block 2 Baranggay 22-C Piape Boulevard Davao City</p>
-        <p>Email: <a href="mailto:your-email@gmail.com">your-email@gmail.com</a></p>
-        <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile">linkedin.com/in/yourprofile</a></p>
-        <p>Phone: <a href="tel:+639XXXXXXXXX">+63 9XXXXXXXXX</a></p>
-        <div class="social-icons">
-          <a href="https://facebook.com/yourprofile">🔵</a>
-          <a href="mailto:your-email@gmail.com">📧</a>
-          <a href="https://linkedin.com/in/yourprofile">🔗</a>
-          <a href="tel:+639XXXXXXXXX">📞</a>
-        </div>
+      <div class="socials">
+        <a href="[Facebook URL]" target="_blank">📘</a>
+        <a href="mailto:[Your Email]">📧</a>
+        <a href="[LinkedIn URL]" target="_blank">💼</a>
+        <a href="tel:[Your Contact Number]">📱</a>
       </div>
-    </section>
+      <a class="download-btn" href="your-resume.pdf" download>Download Resume</a>
+    </div>
+  </div>
 
-    <!-- About Me Section -->
-    <section id="about">
-      <h2>Family Tree</h2>
-      <!-- Dynamic family content with images, names, dates -->
-      <!-- Example -->
-      <div class="family-member">
-        <img src="assets/father.jpg" alt="Father">
-        <p><a href="#">Father's Name</a></p>
-        <p>Birthdate: MM/DD/YYYY</p>
-        <p>Address: [Address]</p>
-        <p>Occupation: [Job]</p>
-      </div>
-      <!-- Repeat for each member -->
-    </section>
-
-    <!-- Life Update Section -->
-    <section id="life">
-      <h2>Life Updates</h2>
-      <form class="create-post">
-        <textarea placeholder="What's new?"></textarea>
-        <input type="file" multiple>
-        <button type="submit">Post</button>
-      </form>
-      <div class="posts">
-        <!-- Dynamic posts will appear here -->
-      </div>
-    </section>
-
-    <!-- Contact Me Section -->
-    <section id="contact">
-      <h2>Contact Me</h2>
-      <div class="contact-icons">
-        <a href="https://facebook.com/yourprofile">🔵 Facebook</a>
-        <a href="mailto:your-email@gmail.com">📧 Gmail</a>
-        <a href="https://linkedin.com/in/yourprofile">🔗 LinkedIn</a>
-        <a href="https://youtube.com/yourchannel">▶ YouTube</a>
-        <a href="https://instagram.com/yourprofile">📸 Instagram</a>
-        <a href="https://twitter.com/yourprofile">🐦 Twitter</a>
-        <a href="tel:+639XXXXXXXXX">📞 Contact Number</a>
-      </div>
-    </section>
-  </main>
+  <script src="profile.js"></script>
 </body>
 </html>
