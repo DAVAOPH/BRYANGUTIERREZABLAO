@@ -194,27 +194,6 @@
       list-style: square inside;
     }
 
-    .download-btn {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 30px;
-    }
-
-    .download-btn a, .download-btn button {
-      padding: 10px 20px;
-      background-color: #2a3d66;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .download-btn a:hover, .download-btn button:hover {
-      background-color: #1a2a47;
-    }
-
     .skills-references {
       display: flex;
       flex-wrap: wrap;
@@ -262,12 +241,6 @@
       color: #333;
     }
 
-    @media print {
-  header,
-  .download-btn {
-    display: none !important;
-  }
-
   body {
     background: white !important;
   }
@@ -278,7 +251,6 @@
     padding: 0 !important;
     width: 100% !important;
   }
-}
 
   </style>
 </head>
@@ -312,14 +284,14 @@
   <input type="text" id="email" value="ablaobryan4400@gmail.com" style="display:none;">
 
   <label for="contact">Contact Number:</label>
-  <p class="view-mode" id="contact-view">#09928760990</p>
-  <input type="text" id="contact" value="#09928760990" style="display:none;">
+  <p class="view-mode" id="contact-view">09928760990</p>
+  <input type="text" id="contact" value="09928760990" style="display:none;">
 
   <label for="objective">Objective:</label>
   <p class="view-mode" id="objective-view">
     To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.
   </p>
-  <textarea id="objective" rows="4" style="display:none;">To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
+  <textarea id="objective" lang="en" rows="4" style="display:none;">To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
 </div>
 
     <div class="profile-img">
@@ -377,63 +349,13 @@
     </div>
   </div>
 
-  <div class="download-btn">
-    <button onclick="printResume()">Download Resume</button>
-    <button onclick="toggleEdit(this)">Edit</button>
-  </div>
-</div>
-
-<script>
+  <script>
   function toggleMenu() {
     const nav = document.getElementById('nav');
     nav.classList.toggle('active');
   }
+  </script>
 
-  function toggleEdit(btn) {
-    const isEditing = btn.textContent === 'Save';
-    btn.textContent = isEditing ? 'Edit' : 'Save';
-
-    // Toggle input/textareas and p views
-    ['address', 'email', 'contact', 'objective'].forEach(id => {
-      const input = document.getElementById(id);
-      const view = document.getElementById(id + '-view');
-
-      if (isEditing) {
-        // Save mode: copy value to view and hide input
-        view.textContent = input.value;
-        input.style.display = 'none';
-        view.style.display = 'block';
-      } else {
-        // Edit mode: show input with current value
-        input.style.display = 'block';
-        view.style.display = 'none';
-      }
-    });
-  }
-</script>
-
-<script>
-  function printResume() {
-    window.print();
-  }
-
-  function toggleMenu() {
-    const nav = document.getElementById('nav');
-    nav.classList.toggle('active');
-  }
-
-  function toggleEdit(btn) {
-    const details = document.getElementById('details');
-    const isEditing = btn.textContent === 'Save';
-
-    details.classList.toggle('editing');
-
-    const inputs = details.querySelectorAll('input[type="text"], textarea');
-    inputs.forEach(el => el.disabled = isEditing);
-
-    btn.textContent = isEditing ? 'Edit' : 'Save';
-  }
-</script>
 
 </body>
 </html>
