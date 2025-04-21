@@ -1,1 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BRYAN ABLAO | Resume</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-left">BRYAN ABLAO</div>
+    <div class="nav-right">
+      <a href="resume.pdf" download class="download-btn">Download Resume</a>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </header>
 
+  <nav id="menu" class="menu">
+    <a href="#resume">Resume</a>
+    <a href="#updates">Life Update</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact Me</a>
+  </nav>
+
+  <main>
+    <section id="resume">
+      <div class="profile">
+        <img src="assets/profile.jpg" alt="Profile Picture" class="profile-img" />
+        <h1>BRYAN GUTIERREZ ABLAO</h1>
+        <p>Address: [Your Address]</p>
+        <p>Email: [Your Email]</p>
+        <p>LinkedIn: <a href="#">Your LinkedIn</a></p>
+        <p>Contact No: [Your Number]</p>
+      </div>
+
+      <div class="about">
+        <h2>About Me</h2>
+        <p>To secure a meaningful career opportunity that allows me to apply my training in human resources and management, while contributing to the success and growth of the organization.</p>
+      </div>
+
+      <div class="personal-info">
+        <h2>Personal Information</h2>
+        <ul>
+          <li>Birthdate: </li>
+          <li>Birthplace: </li>
+          <li>Civil Status: </li>
+          <li>Citizenship: </li>
+          <li>Religion: </li>
+          <li>Gender: </li>
+          <li>Father’s Name: </li>
+          <li>Mother’s Name: </li>
+        </ul>
+      </div>
+
+      <div class="education">
+        <h2>Educational Background</h2>
+        <ul>
+          <li>Elementary: </li>
+          <li>High School: </li>
+          <li>College: </li>
+        </ul>
+      </div>
+
+      <div class="experience">
+        <h2>Experience</h2>
+        <p>[List of jobs you've done with descriptions]</p>
+      </div>
+
+      <div class="skills">
+        <h2>Skills</h2>
+        <ul>
+          <li>Communication</li>
+          <li>Time Management</li>
+          <li>Problem Solving</li>
+          <li>Team Leadership</li>
+          <li>Microsoft Office</li>
+        </ul>
+      </div>
+
+      <div class="references">
+        <h2>Character References</h2>
+        <p>[Reference Name – Position – Contact]</p>
+      </div>
+    </section>
+
+    <section id="updates">
+      <h2>Life Updates</h2>
+      <p>[Add your personal or career updates here]</p>
+    </section>
+
+    <section id="gallery">
+      <h2>Gallery</h2>
+      <p>[Add photos or project images here]</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <p>[Optional: Contact form or social links]</p>
+    </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('show');
+    }
+  </script>
+</body>
+</html>
