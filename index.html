@@ -44,7 +44,7 @@
     }
 
     .logo span {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
     }
 
@@ -124,35 +124,13 @@
     }
 
     .details h2 {
-      font-size: 28px;
-      margin-bottom: 15px;
-    }
-
-    .details label {
-      font-weight: bold;
+      font-size: 36px;
+      margin-bottom: 20px;
     }
 
     .details p {
       margin: 10px 0;
-    }
-    
-    input[disabled], textarea[disabled] {
-      opacity: 1 !important;
-      color: #333 !important;
-    }
-
-    textarea, input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    textarea:disabled, input:disabled {
-      background-color: #f9f9f9;
-      color: #555;
+      font-size: 16px;
     }
 
     hr {
@@ -214,47 +192,9 @@
       margin-bottom: 10px;
     }
 
-    .details.editing input[type="text"],
-    .details.editing textarea {
-      display: block;
+    body {
+      background: white;
     }
-
-    .details.editing label {
-      display: block;
-      margin-top: 10px;
-    }
-
-        .view-mode input[type="text"],
-    .view-mode textarea {
-      border: none;
-      background: none;
-      pointer-events: none;
-      padding: 0;
-      margin: 0;
-      font-size: 16px;
-      color: #333;
-    }
-
-    .view-mode input[type="text"]:disabled,
-    .view-mode textarea:disabled {
-      background: none;
-      color: #333;
-    }
-
-  body {
-  background: white;
-}
-
-.container {
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 1000px;
-  width: 100%;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
 
   </style>
 </head>
@@ -276,28 +216,13 @@
 
 <div class="container">
   <div class="top-section">
-    <div class="details" id="details">
-  <h2>Bryan Gutierrez Ablao</h2>
-
-  <label for="address">Current Address:</label>
-  <p class="view-mode" id="address-view">Super Block 2 Baranggay 22 - C Piape Boulevard Davao City</p>
-  <input type="text" id="address" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City" style="display:none;">
-
-  <label for="email">Email:</label>
-  <p class="view-mode" id="email-view">ablaobryan4400@gmail.com</p>
-  <input type="text" id="email" value="ablaobryan4400@gmail.com" style="display:none;">
-
-  <label for="contact">Contact Number:</label>
-  <p class="view-mode" id="contact-view">09928760990</p>
-  <input type="text" id="contact" value="09928760990" style="display:none;">
-
-  <label for="objective">Objective:</label>
-  <p class="view-mode" id="objective-view">
-    To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.
-  </p>
-  <textarea id="objective" lang="en" rows="4" style="display:none;">To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
-</div>
-
+    <div class="details">
+      <h2>Bryan Gutierrez Ablao</h2>
+      <p>Super Block 2 Baranggay 22 - C Piape Boulevard Davao City</p>
+      <p>ablaobryan4400@gmail.com</p>
+      <p>09928760990</p>
+      <p>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</p>
+    </div>
     <div class="profile-img">
       <img src="assets/bryan.jpg" alt="Profile Picture">
     </div>
@@ -354,12 +279,11 @@
   </div>
 
   <script>
-  function toggleMenu() {
-    const nav = document.getElementById('nav');
-    nav.classList.toggle('active');
-  }
+    function toggleMenu() {
+      const nav = document.getElementById('nav');
+      nav.classList.toggle('active');
+    }
   </script>
-
 
 </body>
 </html>
