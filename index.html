@@ -1,3 +1,4 @@
+<!-- Replace your existing HTML with this one -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,14 +35,14 @@
     }
 
     .logo img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
       margin-right: 10px;
     }
 
     .logo span {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
     }
 
@@ -120,6 +121,15 @@
       flex: 2;
     }
 
+    .details h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .details label {
+      font-weight: bold;
+    }
+
     .details p {
       margin: 10px 0;
     }
@@ -131,6 +141,11 @@
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
+    }
+
+    textarea:disabled, input:disabled {
+      background-color: #f9f9f9;
+      color: #555;
     }
 
     hr {
@@ -154,28 +169,42 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
+      table-layout: fixed;
     }
 
     table td {
       padding: 10px;
       border: 1px solid #ccc;
+      word-wrap: break-word;
+      text-align: center;
+    }
+
+    h3 {
+      margin-top: 30px;
+    }
+
+    ul {
+      margin-left: 20px;
     }
 
     .download-btn {
-      display: block;
-      text-align: right;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-top: 20px;
     }
 
-    .download-btn a {
+    .download-btn a, .download-btn button {
       padding: 10px 20px;
       background-color: #2a3d66;
       color: white;
       text-decoration: none;
       border-radius: 5px;
+      border: none;
+      cursor: pointer;
     }
 
-    .download-btn a:hover {
+    .download-btn a:hover, .download-btn button:hover {
       background-color: #1a2a47;
     }
   </style>
@@ -201,16 +230,16 @@
     <div class="details">
       <h2>Bryan Gutierrez Ablao</h2>
       <label>Current Address:</label>
-      <input type="text" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City">
+      <input type="text" value="Super Block 2 Baranggay 22 - C Piape Boulevard Davao City" disabled>
       <label>Email:</label>
-      <input type="text" value="ablaobryan4400@gmail.com">
+      <input type="text" value="ablaobryan4400@gmail.com" disabled>
       <label>Contact Number:</label>
-      <input type="text" value="#09928760990">
+      <input type="text" value="#09928760990" disabled>
       <label>Objective:</label>
-      <textarea rows="4">To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
+      <textarea rows="4" disabled>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</textarea>
     </div>
     <div class="profile-img">
-      <img src="assets/profile.jpg" alt="Profile Picture">
+      <img src="assets/bryan.jpg" alt="Profile Picture">
     </div>
   </div>
 
@@ -222,11 +251,11 @@
     <div>Birthplace</div>
     <div>Jose Fabella Metro Manila Hospital</div>
     <div>Civil Status</div>
-    <div><input type="text" value="Single"></div>
+    <div><input type="text" value="Single" disabled></div>
     <div>Citizenship</div>
     <div>Filipino</div>
     <div>Religion</div>
-    <div><input type="text" value="Christian"></div>
+    <div><input type="text" value="Christian" disabled></div>
     <div>Gender</div>
     <div>Male</div>
     <div>Father’s Name</div>
@@ -269,6 +298,7 @@
 
   <div class="download-btn">
     <a href="your-resume.pdf" download>Download Resume</a>
+    <button onclick="toggleEdit(this)">Edit</button>
   </div>
 </div>
 
@@ -276,6 +306,17 @@
 function toggleMenu() {
   const nav = document.getElementById('nav');
   nav.classList.toggle('active');
+}
+
+function toggleEdit(btn) {
+  const inputs = document.querySelectorAll('input[type="text"], textarea');
+  const isEditing = btn.textContent === 'Save';
+
+  inputs.forEach(el => el.disabled = isEditing);
+
+  btn.textContent = isEditing ? 'Edit' : 'Save';
+
+  // Optional: you can implement saving logic here (e.g. store in localStorage or Firebase)
 }
 </script>
 
