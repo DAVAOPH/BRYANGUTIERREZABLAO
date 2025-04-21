@@ -2,107 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BRYAN ABLAO | Resume</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bryan Gutierrez Ablao</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/profile.jpg" type="image/jpg" />
+  <script src="scripts.js" defer></script>
 </head>
 <body>
   <header>
-    <div class="nav-left">BRYAN ABLAO</div>
-    <div class="nav-right">
-      <a href="resume.pdf" download class="download-btn">Download Resume</a>
-      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/DAVAOPH/BRYANGUTIERREZABLAO/main/assets/profile.jpg" alt="Favicon">
+      <span>Bryan Gutierrez Ablao</span>
     </div>
+    <button id="hamburger">☰</button>
+    <nav id="nav-menu">
+      <a href="#profile">Profile</a>
+      <a href="#about">About Me</a>
+      <a href="#life">Life Update</a>
+      <a href="#contact">Contact Me</a>
+    </nav>
   </header>
 
-  <nav id="menu" class="menu">
-    <a href="#resume">Resume</a>
-    <a href="#updates">Life Update</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact Me</a>
-  </nav>
-
   <main>
-    <section id="resume">
-      <div class="profile">
-        <img src="assets/profile.jpg" alt="Profile Picture" class="profile-img" />
-        <h1>BRYAN GUTIERREZ ABLAO</h1>
-        <p>Address: [Your Address]</p>
-        <p>Email: [Your Email]</p>
-        <p>LinkedIn: <a href="#">Your LinkedIn</a></p>
-        <p>Contact No: [Your Number]</p>
+    <!-- Profile Section -->
+    <section id="profile">
+      <div class="resume-header">
+        <h1>My Resume</h1>
+        <a href="assets/BRYAN_ABLAO_RESUME.pdf" download class="download-btn">Download Resume</a>
       </div>
-
-      <div class="about">
-        <h2>About Me</h2>
-        <p>To secure a meaningful career opportunity that allows me to apply my training in human resources and management, while contributing to the success and growth of the organization.</p>
-      </div>
-
-      <div class="personal-info">
-        <h2>Personal Information</h2>
-        <ul>
-          <li>Birthdate: </li>
-          <li>Birthplace: </li>
-          <li>Civil Status: </li>
-          <li>Citizenship: </li>
-          <li>Religion: </li>
-          <li>Gender: </li>
-          <li>Father’s Name: </li>
-          <li>Mother’s Name: </li>
-        </ul>
-      </div>
-
-      <div class="education">
-        <h2>Educational Background</h2>
-        <ul>
-          <li>Elementary: </li>
-          <li>High School: </li>
-          <li>College: </li>
-        </ul>
-      </div>
-
-      <div class="experience">
-        <h2>Experience</h2>
-        <p>[List of jobs you've done with descriptions]</p>
-      </div>
-
-      <div class="skills">
-        <h2>Skills</h2>
-        <ul>
-          <li>Communication</li>
-          <li>Time Management</li>
-          <li>Problem Solving</li>
-          <li>Team Leadership</li>
-          <li>Microsoft Office</li>
-        </ul>
-      </div>
-
-      <div class="references">
-        <h2>Character References</h2>
-        <p>[Reference Name – Position – Contact]</p>
+      <div class="profile-content">
+        <img src="assets/profile.jpg" alt="Profile Picture" class="profile-pic">
+        <h2>Bryan Gutierrez Ablao</h2>
+        <p>Current Address: Super Block 2 Baranggay 22-C Piape Boulevard Davao City</p>
+        <p>Email: <a href="mailto:your-email@gmail.com">your-email@gmail.com</a></p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile">linkedin.com/in/yourprofile</a></p>
+        <p>Phone: <a href="tel:+639XXXXXXXXX">+63 9XXXXXXXXX</a></p>
+        <div class="social-icons">
+          <a href="https://facebook.com/yourprofile">🔵</a>
+          <a href="mailto:your-email@gmail.com">📧</a>
+          <a href="https://linkedin.com/in/yourprofile">🔗</a>
+          <a href="tel:+639XXXXXXXXX">📞</a>
+        </div>
       </div>
     </section>
 
-    <section id="updates">
+    <!-- About Me Section -->
+    <section id="about">
+      <h2>Family Tree</h2>
+      <!-- Dynamic family content with images, names, dates -->
+      <!-- Example -->
+      <div class="family-member">
+        <img src="assets/father.jpg" alt="Father">
+        <p><a href="#">Father's Name</a></p>
+        <p>Birthdate: MM/DD/YYYY</p>
+        <p>Address: [Address]</p>
+        <p>Occupation: [Job]</p>
+      </div>
+      <!-- Repeat for each member -->
+    </section>
+
+    <!-- Life Update Section -->
+    <section id="life">
       <h2>Life Updates</h2>
-      <p>[Add your personal or career updates here]</p>
+      <form class="create-post">
+        <textarea placeholder="What's new?"></textarea>
+        <input type="file" multiple>
+        <button type="submit">Post</button>
+      </form>
+      <div class="posts">
+        <!-- Dynamic posts will appear here -->
+      </div>
     </section>
 
-    <section id="gallery">
-      <h2>Gallery</h2>
-      <p>[Add photos or project images here]</p>
-    </section>
-
+    <!-- Contact Me Section -->
     <section id="contact">
       <h2>Contact Me</h2>
-      <p>[Optional: Contact form or social links]</p>
+      <div class="contact-icons">
+        <a href="https://facebook.com/yourprofile">🔵 Facebook</a>
+        <a href="mailto:your-email@gmail.com">📧 Gmail</a>
+        <a href="https://linkedin.com/in/yourprofile">🔗 LinkedIn</a>
+        <a href="https://youtube.com/yourchannel">▶ YouTube</a>
+        <a href="https://instagram.com/yourprofile">📸 Instagram</a>
+        <a href="https://twitter.com/yourprofile">🐦 Twitter</a>
+        <a href="tel:+639XXXXXXXXX">📞 Contact Number</a>
+      </div>
     </section>
   </main>
-
-  <script>
-    function toggleMenu() {
-      document.getElementById('menu').classList.toggle('show');
-    }
-  </script>
 </body>
 </html>
