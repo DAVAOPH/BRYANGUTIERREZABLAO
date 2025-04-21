@@ -262,6 +262,24 @@
       color: #333;
     }
 
+    @media print {
+  header,
+  .download-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .container {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -360,7 +378,7 @@
   </div>
 
   <div class="download-btn">
-    <a href="your-resume.pdf" download>Download Resume</a>
+    <button onclick="printResume()">Download Resume</button>
     <button onclick="toggleEdit(this)">Edit</button>
   </div>
 </div>
@@ -394,6 +412,28 @@
   }
 </script>
 
+<script>
+  function printResume() {
+    window.print();
+  }
+
+  function toggleMenu() {
+    const nav = document.getElementById('nav');
+    nav.classList.toggle('active');
+  }
+
+  function toggleEdit(btn) {
+    const details = document.getElementById('details');
+    const isEditing = btn.textContent === 'Save';
+
+    details.classList.toggle('editing');
+
+    const inputs = details.querySelectorAll('input[type="text"], textarea');
+    inputs.forEach(el => el.disabled = isEditing);
+
+    btn.textContent = isEditing ? 'Edit' : 'Save';
+  }
+</script>
 
 </body>
 </html>
