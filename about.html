@@ -122,6 +122,7 @@
 
     .family-member {
       display: flex;
+      flex-direction: row;
       align-items: center;
       margin-bottom: 20px;
       background-color: #f9f9f9;
@@ -147,6 +148,7 @@
 
     .member-details p {
       margin: 3px 0;
+      font-size: 14px;
     }
 
     .member-details a {
@@ -171,6 +173,24 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Member Layout */
+    @media (max-width: 600px) {
+      .family-member {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: center;
+      }
+
+      .family-member img {
+        margin: 0 auto 10px;
+      }
+
+      .member-details {
+        align-items: center;
+        width: 100%;
+      }
     }
 
     /* MODAL STYLES */
@@ -313,13 +333,12 @@
   </div>
 
   <!-- Modal -->
-<div id="imageModal" class="modal" onclick="closeModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <img id="modalImage" src="" alt="Enlarged Image" />
-    <div class="modal-message" id="modalMessage"></div>
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <img id="modalImage" src="" alt="Enlarged Image" />
+      <div class="modal-message" id="modalMessage"></div>
+    </div>
   </div>
-</div>
-
 
   <script>
     function toggleMenu() {
