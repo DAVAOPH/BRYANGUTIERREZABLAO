@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Life Update - Bryan Gutierrez Ablao</title>
   <link rel="icon" type="image/jpg" href="assets/profile.jpg" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -12,43 +13,49 @@
       box-sizing: border-box;
     }
 
+    html {
+      font-size: 16px;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e6ecff, #ffffff);
       color: #333;
+      scroll-behavior: smooth;
     }
 
     header {
-      background-color: #2a3d66;
+      background: #1d2b53;
       color: white;
-      padding: 15px 20px;
+      padding: 15px 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
+      flex-wrap: wrap;
     }
 
     .logo {
       display: flex;
       align-items: center;
+      gap: 10px;
     }
 
     .logo img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
     }
 
     .logo span {
-      font-size: 20px;
+      font-size: 1.2rem;
       font-weight: bold;
     }
 
     .hamburger {
-      font-size: 24px;
+      font-size: 1.8rem;
       cursor: pointer;
       display: none;
     }
@@ -61,11 +68,23 @@
     nav a {
       color: white;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 1rem;
+      position: relative;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      left: 0;
+      bottom: -4px;
+      background: white;
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
     }
 
     @media (max-width: 768px) {
@@ -76,11 +95,11 @@
       nav {
         display: none;
         flex-direction: column;
-        background-color: #2a3d66;
+        background: #1d2b53;
+        width: 100%;
         position: absolute;
         top: 60px;
         left: 0;
-        width: 100%;
         padding: 10px 20px;
       }
 
@@ -90,120 +109,115 @@
     }
 
     .container {
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 30px 20px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.8s ease-in;
     }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #1d2b53;
+      margin: 35px 0 15px;
+      border-left: 5px solid #1d2b53;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      bottom: -5px;
+      width: 40px;
+      height: 3px;
+      background: #1d2b53;
+      transition: width 0.3s ease;
+    }
+
+    .section-title:hover::after {
+      width: 100px;
     }
 
     .create-post {
-      border: 1px solid #ccc;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 30px;
+      margin-top: 20px;
+      padding: 20px;
+      background: #f9fbff;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      text-align: center;
     }
 
+    .create-post input,
     .create-post textarea {
       width: 100%;
       padding: 10px;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #999;
-      resize: vertical;
-    }
-
-    .create-post input[type="file"] {
       margin-top: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
     }
 
     .create-post button {
-      margin-top: 10px;
       padding: 10px 20px;
-      background-color: #2a3d66;
+      background: #1d2b53;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 1rem;
     }
 
     .create-post button:hover {
-      background-color: #1c2a49;
+      background: #162043;
     }
 
-    .post {
-      background-color: #f9f9f9;
-      border-left: 4px solid #2a3d66;
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 6px;
-    }
-
-    .post p {
-      margin: 0 0 10px;
-    }
-
-    .post .media {
-      margin-top: 10px;
-    }
-
-    .post img,
-    .post video {
-      max-width: 100%;
-      border-radius: 5px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="assets/bryan.jpg" alt="Profile" />
-      <span>Bryan Gutierrez Ablao</span>
-    </div>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <nav id="nav">
-      <a href="index.html">Profile</a>
-      <a href="about.html">About Me</a>
-      <a href="life.html">Life Update</a>
-      <a href="contact.html">Contact Me</a>
-    </nav>
-  </header>
-
-  <div class="container">
-    <h1>Life Update</h1>
-
-    <div class="create-post">
-      <textarea rows="4" placeholder="What's on your mind?"></textarea>
-      <input type="file" accept="image/*,video/*" />
-      <button onclick="alert('Post uploaded (mock).')">Post</button>
-    </div>
-
-    <div class="post">
-      <p><strong>Bryan Gutierrez Ablao:</strong> Just launched my resume site! 🚀</p>
-      <div class="media">
-        <img src="assets/profile.jpg" alt="Sample Image" />
-      </div>
-    </div>
-
-    <div class="post">
-      <p><strong>Bryan Gutierrez Ablao:</strong> My first life update goes here!</p>
-      <div class="media">
-        <video controls>
-          <source src="assets/sample-video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
+<header>
+  <div class="logo">
+    <img src="assets/bryan.jpg" alt="Profile">
+    <span>Bryan Gutierrez Ablao</span>
   </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <nav id="nav">
+    <a href="index.html">Profile</a>
+    <a href="about.html">About Me</a>
+    <a href="life.html">Life Update</a>
+    <a href="contact.html">Contact Me</a>
+  </nav>
+</header>
 
-  <script src="life.js"></script>
+<div class="container">
+  <div class="section-title">Life Update</div>
+  <p>Welcome to my life update section! Here you can share new events, milestones, or stories. Feel free to upload photos, videos, or any files.</p>
+
+  <div class="create-post">
+    <h3>Create a New Post</h3>
+    <input type="text" placeholder="Post Title">
+    <textarea rows="5" placeholder="What's on your mind?"></textarea>
+    <input type="file" multiple />
+    <button>Post</button>
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('nav').classList.toggle('active');
+  }
+</script>
+
 </body>
 </html>
-
