@@ -7,8 +7,268 @@
   <link rel="icon" type="image/jpg" href="assets/profile.jpg" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Styles same as your original (unchanged) */
-    /* ... paste all the original <style> content here ... */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e6ecff, #ffffff);
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: #1d2b53;
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .logo span {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .hamburger {
+      font-size: 1.8rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      left: 0;
+      bottom: -4px;
+      background: white;
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        background: #1d2b53;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        padding: 10px 20px;
+      }
+
+      nav.active {
+        display: flex;
+      }
+    }
+
+    .layout {
+      display: flex;
+      max-width: 1200px;
+      margin: 40px auto;
+      gap: 20px;
+      padding: 0 20px;
+      flex-wrap: wrap;
+    }
+
+    aside {
+      flex: 0 0 200px;
+    }
+
+    .sidebar {
+      width: 100%;
+      background: #f4f6ff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar h3 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: #1d2b53;
+    }
+
+    .category-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .category-list li {
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #fff;
+      border: 1px solid #dcdcdc;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .category-list li:hover {
+      background: #e6ecff;
+    }
+
+    .category-list li.active {
+      background: #1d2b53;
+      color: white;
+      font-weight: 600;
+    }
+
+    .container {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 30px 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #1d2b53;
+      margin: 35px 0 15px;
+      border-left: 5px solid #1d2b53;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      bottom: -5px;
+      width: 40px;
+      height: 3px;
+      background: #1d2b53;
+      transition: width 0.3s ease;
+    }
+
+    .section-title:hover::after {
+      width: 100px;
+    }
+
+    .create-post {
+      margin-top: 20px;
+      padding: 20px;
+      background: #f9fbff;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .create-post input,
+    .create-post textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+    }
+
+    .create-post button {
+      padding: 10px 20px;
+      background: #1d2b53;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .create-post button:hover {
+      background: #162043;
+    }
+
+    .post {
+      background: #f2f4ff;
+      padding: 15px 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .post-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .post-content {
+      margin-bottom: 10px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .post-actions button {
+      background: #1d2b53;
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .post-actions button:hover {
+      background: #0f1a3a;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -44,12 +304,12 @@
     <div class="section-title">Life Update</div>
     <p>Welcome to my life update section! Here you can share new events, milestones, or stories.</p>
 
-    <div class="create-post" id="create-post">
+    <div class="create-post">
       <h3>Create a New Post</h3>
       <input type="text" id="title" placeholder="Post Title">
       <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
-      <input type="file" id="fileInput" multiple />
-      <button onclick="createPost()">➕ Post</button>
+      <input type="file" multiple />
+      <button onclick="createPost()">Post</button>
     </div>
 
     <div id="posts-container"></div>
@@ -57,8 +317,6 @@
 </div>
 
 <script>
-  let currentCategory = 'home';
-
   function toggleMenu() {
     document.getElementById('nav').classList.toggle('active');
   }
@@ -66,35 +324,16 @@
   function createPost() {
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
 
-    if (!title || (!content && !file)) return alert('Please provide title and content or file.');
+    if (!title || !content) return alert('Please fill in all fields.');
 
-    let type = 'text', fileURL = '';
-    if (file) {
-      fileURL = URL.createObjectURL(file);
-      const ext = file.name.split('.').pop().toLowerCase();
-      if (['jpg', 'jpeg', 'png', 'gif'].includes(ext)) type = 'image';
-      else if (['mp4', 'mov', 'avi'].includes(ext)) type = 'video';
-    }
-
-    const post = {
-      id: Date.now(),
-      title,
-      content,
-      fileURL,
-      type,
-      favorite: false
-    };
-
+    const post = { id: Date.now(), title, content };
     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
     posts.unshift(post);
     localStorage.setItem('lifePosts', JSON.stringify(posts));
 
     document.getElementById('title').value = '';
     document.getElementById('content').value = '';
-    fileInput.value = '';
     renderPosts();
   }
 
@@ -118,49 +357,27 @@
     }
   }
 
-  function toggleFavorite(id) {
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const post = posts.find(p => p.id === id);
-    post.favorite = !post.favorite;
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-    renderPosts();
-  }
-
   function renderPosts() {
     const container = document.getElementById('posts-container');
     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-
-    const filtered = posts.filter(post => {
-      if (currentCategory === 'gallery') return post.type === 'image';
-      if (currentCategory === 'videos') return post.type === 'video';
-      if (currentCategory === 'favorite') return post.favorite;
-      return true; // home
-    });
-
-    container.innerHTML = filtered.map(p => `
+    container.innerHTML = posts.map(p => `
       <div class="post">
         <div class="post-title">${p.title}</div>
-        <div class="post-content">${p.content || ''}</div>
-        ${p.fileURL && p.type === 'image' ? `<img src="${p.fileURL}" style="max-width:100%; border-radius:8px;" />` : ''}
-        ${p.fileURL && p.type === 'video' ? `<video controls style="max-width:100%; border-radius:8px;"><source src="${p.fileURL}"></video>` : ''}
-        ${currentCategory === 'home' ? `
-          <div class="post-actions">
-            <button onclick="editPost(${p.id})">📝 Edit</button>
-            <button onclick="deletePost(${p.id})">❌ Delete</button>
-            <button onclick="toggleFavorite(${p.id})">${p.favorite ? '💛 Unfavorite' : '⭐ Favorite'}</button>
-          </div>` : ''}
+        <div class="post-content">${p.content}</div>
+        <div class="post-actions">
+          <button onclick="editPost(${p.id})">📝 Edit</button>
+          <button onclick="deletePost(${p.id})">❌ Delete</button>
+        </div>
       </div>
     `).join('');
-
-    document.getElementById('create-post').style.display = currentCategory === 'home' ? 'block' : 'none';
   }
 
   document.querySelectorAll('.category-list li').forEach(item => {
     item.addEventListener('click', () => {
       document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
       item.classList.add('active');
-      currentCategory = item.getAttribute('data-category');
-      renderPosts();
+      const category = item.getAttribute('data-category');
+      console.log('Selected category:', category);
     });
   });
 
