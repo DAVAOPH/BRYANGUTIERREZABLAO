@@ -399,15 +399,15 @@
     if (category === 'gallery') {
       filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('image/')));
       createSection.style.display = 'none';
-      message.textContent = "No Image Posted yet. Please post an image on the Home Category.";
+      message.textContent = "Explore the gallery of Bryan Gutierrez Ablao, where art, inspiration, and personal experiences blend into a unique visual story.";
     } else if (category === 'videos') {
       filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('video/')));
       createSection.style.display = 'none';
-      message.textContent = "No Videos Posted yet. Please post a video on the Home Category.";
+      message.textContent = "Take a look at the videos of Bryan Gutierrez Ablao visuals that tell stories, from everyday moments to meaningful experiences.";
     } else if (category === 'favorite') {
       filtered = posts.filter(p => p.favorite);
       createSection.style.display = 'none';
-      message.textContent = "No Favorites yet. Mark posts as ⭐ Favorite.";
+      message.textContent = "A glimpse into the things I love and enjoy most.";
     } else {
       createSection.style.display = 'block';
       message.textContent = "Welcome to my life update section! Here you can share new events, milestones, or stories.";
