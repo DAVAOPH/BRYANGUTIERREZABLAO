@@ -431,7 +431,7 @@
         <div class="post-actions">
           <button onclick="editPost(${p.id})">📝 Edit</button>
           <button onclick="deletePost(${p.id})">❌ Delete</button>
-          <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '⭐ Favorite'}</button>
+          <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '🌟 Favorite'}</button>
         </div>
       </div>
     `).join('') || '<p style="margin-top:20px;">No posts yet in this category.</p>';
