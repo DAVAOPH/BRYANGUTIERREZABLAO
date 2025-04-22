@@ -114,15 +114,10 @@
       margin: 40px auto;
       gap: 20px;
       padding: 0 20px;
-      flex-wrap: wrap;
-    }
-
-    aside {
-      flex: 0 0 200px;
     }
 
     .sidebar {
-      width: 100%;
+      width: 200px;
       background: #f4f6ff;
       border-radius: 10px;
       padding: 20px;
@@ -265,6 +260,13 @@
       background: #0f1a3a;
     }
 
+    .no-posts {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: #888;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -307,81 +309,102 @@
     <div class="create-post">
       <h3>Create a New Post</h3>
       <input type="text" id="title" placeholder="Post Title">
-      <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
-      <input type="file" multiple />
-      <button onclick="createPost()">Post</button>
+      <textarea id="content" rows="4" placeholder="Write your post here..."></textarea>
+      <input type="file" id="fileInput" accept="image/*,video/*" onchange="previewMedia(event)">
+      <button onclick="submitPost()">Post</button>
+      <div id="preview"></div>
     </div>
 
-    <div id="posts-container"></div>
+    <div class="posts" id="posts"></div>
+    <div class="no-posts" id="noPostsMessage">No posts yet. Please create a post.</div>
   </div>
 </div>
 
 <script>
-  function toggleMenu() {
-    document.getElementById('nav').classList.toggle('active');
-  }
+  let currentCategory = "home";
+  const posts = [];
 
-  function createPost() {
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
-
-    if (!title || !content) return alert('Please fill in all fields.');
-
-    const post = { id: Date.now(), title, content };
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    posts.unshift(post);
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-
-    document.getElementById('title').value = '';
-    document.getElementById('content').value = '';
-    renderPosts();
-  }
-
-  function deletePost(id) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    posts = posts.filter(p => p.id !== id);
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-    renderPosts();
-  }
-
-  function editPost(id) {
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const post = posts.find(p => p.id === id);
-    const newTitle = prompt('Edit title:', post.title);
-    const newContent = prompt('Edit content:', post.content);
-    if (newTitle && newContent) {
-      post.title = newTitle;
-      post.content = newContent;
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-      renderPosts();
-    }
-  }
-
-  function renderPosts() {
-    const container = document.getElementById('posts-container');
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    container.innerHTML = posts.map(p => `
-      <div class="post">
-        <div class="post-title">${p.title}</div>
-        <div class="post-content">${p.content}</div>
-        <div class="post-actions">
-          <button onclick="editPost(${p.id})">📝 Edit</button>
-          <button onclick="deletePost(${p.id})">❌ Delete</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
+  // Handle the navigation between categories
   document.querySelectorAll('.category-list li').forEach(item => {
-    item.addEventListener('click', () => {
-      document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
-      item.classList.add('active');
-      const category = item.getAttribute('data-category');
-      console.log('Selected category:', category);
+    item.addEventListener('click', (e) => {
+      document.querySelectorAll('.category-list li').forEach(i => i.classList.remove('active'));
+      e.target.classList.add('active');
+      currentCategory = e.target.getAttribute('data-category');
+      filterPosts();
     });
   });
 
-  window.onload = renderPosts;
+  // Preview media (image/video)
+  function previewMedia(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('preview');
+    preview.innerHTML = ''; // Clear previous preview
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const media = document.createElement(file.type.startsWith('image') ? 'img' : 'video');
+        media.src = e.target.result;
+        media.style.width = '100%';
+        media.style.maxHeight = '300px';
+        media.controls = file.type.startsWith('video');
+        preview.appendChild(media);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Filter posts based on category
+  function filterPosts() {
+    const filteredPosts = posts.filter(post => post.category === currentCategory);
+    displayPosts(filteredPosts);
+  }
+
+  // Display posts
+  function displayPosts(postsToDisplay) {
+    const postsContainer = document.getElementById('posts');
+    postsContainer.innerHTML = '';  // Clear current posts
+
+    if (postsToDisplay.length === 0) {
+      document.getElementById('noPostsMessage').style.display = 'block';
+    } else {
+      document.getElementById('noPostsMessage').style.display = 'none';
+      postsToDisplay.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+        postElement.innerHTML = `
+          <div class="post-title">${post.title}</div>
+          <div class="post-content">${post.content}</div>
+          <div class="post-actions">
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+        `;
+        postsContainer.appendChild(postElement);
+      });
+    }
+  }
+
+  // Submit a post
+  function submitPost() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+
+    if (title && content) {
+      const newPost = {
+        title,
+        content,
+        category: currentCategory
+      };
+      posts.push(newPost);
+      displayPosts(posts);
+    }
+  }
+
+  // Toggle hamburger menu
+  function toggleMenu() {
+    document.getElementById('nav').classList.toggle('active');
+  }
 </script>
 
 </body>
