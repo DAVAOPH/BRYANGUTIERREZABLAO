@@ -96,11 +96,13 @@
       background: white;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.5s ease-in-out;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 30px;
+      color: #2a3d66;
     }
 
     .family-member {
@@ -141,6 +143,12 @@
       margin: 30px 0 10px;
       border-bottom: 1px solid #ccc;
       padding-bottom: 5px;
+      color: #2a3d66;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -169,8 +177,8 @@
       <div class="member-details">
         <a href="https://www.facebook.com/profile.php?id=100009343354067" target="_blank">Annalie Gutierrez Ablao (Deceased)</a>
         <p>Birthdate: January 25, 1976</p>
-        <p>Address: N/A </p>
-        <p>Occupation: N/A </p>
+        <p>Address: N/A</p>
+        <p>Occupation: N/A</p>
       </div>
     </div>
 
@@ -179,8 +187,8 @@
       <div class="member-details">
         <a href="https://www.facebook.com/annaliegutierrez.ablao" target="_blank">Evaristo Caste Ablao (Deceased)</a>
         <p>Birthdate: October 26, 1965</p>
-        <p>Address: N/A </p>
-        <p>Occupation: N/A </p>
+        <p>Address: N/A</p>
+        <p>Occupation: N/A</p>
       </div>
     </div>
 
@@ -190,32 +198,36 @@
       <div class="member-details">
         <a href="https://www.facebook.com/bryangablao" target="_blank">Bryan Gutierrez Ablao</a>
         <p>Birthdate: April 04, 2000</p>
-        <p>Address: Super Block 2 Baranggay 22-C Piape Boulevard Davao City</p>
-        <p>Occupation: Call Center Agent/sixeleven</p>
+        <p>Address: Super Block 2, Barangay 22-C, Piape Boulevard, Davao City</p>
+        <p>Occupation: Call Center Agent at SixEleven</p>
       </div>
     </div>
 
     <div class="family-member">
       <img src="assets/kenneth.jpg" alt="Middle Brother" />
       <div class="member-details">
-        <a href="https://www.facebook.com/kenneth.ablao.12" target="_blank">Kenneth Angcos Gutierez</a>
+        <a href="https://www.facebook.com/kenneth.ablao.12" target="_blank">Kenneth Angcos Gutierrez</a>
         <p>Birthdate: January 11, 2002</p>
-        <p>Address: Super Block 2 Baranggay 22-C Piape Boulevard Davao City</p>
-        <p>Occupation: Washer/Rophe's Restaurant</p>
+        <p>Address: Super Block 2, Barangay 22-C, Piape Boulevard, Davao City</p>
+        <p>Occupation: Washer at Rophe's Restaurant</p>
       </div>
     </div>
 
     <div class="family-member">
       <img src="assets/riz.jpg" alt="Younger Brother" />
       <div class="member-details">
-        <a href="https://www.facebook.com/rizevan.ablao.73" target="_blank">Riz Evan Gutierez Ablao</a>
+        <a href="https://www.facebook.com/rizevan.ablao.73" target="_blank">Riz Evan Gutierrez Ablao</a>
         <p>Birthdate: December 30, 2003</p>
-        <p>Address: Super Block 2 Baranggay 22-C Piape Boulevard Davao City</p>
-        <p>Occupation: Senior High Graduate/Sta Ana National High School</p>
+        <p>Address: Super Block 2, Barangay 22-C, Piape Boulevard, Davao City</p>
+        <p>Occupation: Senior High Graduate, Sta. Ana National High School</p>
       </div>
     </div>
   </div>
 
-  <script src="about.js"></script>
+  <script>
+    function toggleMenu() {
+      document.getElementById("nav").classList.toggle("active");
+    }
+  </script>
 </body>
 </html>
