@@ -101,10 +101,14 @@
       nav.active {
         display: flex;
       }
+
+      nav a {
+        padding: 10px 0;
+      }
     }
 
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 50px auto;
       padding: 30px;
       background-color: white;
@@ -115,7 +119,7 @@
 
     h2 {
       margin-bottom: 20px;
-      font-size: 28px;
+      font-size: 32px;
       color: #1d2b53;
     }
 
@@ -135,11 +139,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100px;
     }
 
     .contact-icons a:hover {
       color: #007bff;
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
 
     .contact-icons img {
@@ -162,6 +167,7 @@
       color: #333;
       text-decoration: none;
       font-size: 16px;
+      transition: color 0.3s ease;
     }
 
     .additional-contact a:hover {
@@ -179,8 +185,37 @@
       padding: 20px;
       color: #666;
       font-size: 14px;
+      margin-top: 50px;
     }
 
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 24px;
+      }
+
+      .contact-icons {
+        gap: 15px;
+      }
+
+      .contact-icons a {
+        font-size: 14px;
+        width: 80px;
+      }
+
+      .contact-icons img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .additional-contact a {
+        font-size: 14px;
+      }
+
+      .additional-contact img {
+        width: 20px;
+        height: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -201,6 +236,7 @@
 
 <div class="container">
   <h2>Contact Me</h2>
+
   <div class="contact-icons">
     <a href="https://www.facebook.com/bryanablao" target="_blank">
       <img src="assets/facebook.png" alt="Facebook">
@@ -222,13 +258,12 @@
       <img src="assets/twitter.png" alt="Twitter">
       Twitter
     </a>
-    <a href="tiktok.com/@bryan_zero8" target="_blank">
+    <a href="https://tiktok.com/@bryan_zero8" target="_blank">
       <img src="assets/tiktok.png" alt="Tiktok">
-      Tiktok
+      TikTok
     </a>
   </div>
 
-  <!-- Additional contact information (Gmail, Phone, Address) -->
   <div class="additional-contact">
     <a href="mailto:ablaobryan4400@gmail.com">
       <img src="assets/gmail.png" alt="Gmail">
@@ -244,11 +279,11 @@
     </a>
   </div>
 </div>
-  
+
 <footer>
   &copy; 2025 Bryan Gutierrez Ablao. All rights reserved.
 </footer>
-  
+
 <script>
   function toggleMenu() {
     document.getElementById('nav').classList.toggle('active');
