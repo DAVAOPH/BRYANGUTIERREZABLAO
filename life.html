@@ -114,10 +114,12 @@
       margin: 40px auto;
       gap: 20px;
       padding: 0 20px;
+      flex-wrap: wrap;
     }
 
     .sidebar {
-      width: 200px;
+      width: 100%;
+      max-width: 250px;
       background: #f4f6ff;
       border-radius: 10px;
       padding: 20px;
@@ -157,6 +159,7 @@
 
     .container {
       flex: 1;
+      min-width: 300px;
       background: #ffffff;
       border-radius: 15px;
       padding: 30px 20px;
@@ -244,6 +247,7 @@
     .post-actions {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .post-actions button {
@@ -283,16 +287,14 @@
 </header>
 
 <div class="layout">
-  <aside>
-    <div class="sidebar">
-      <h3>Categories</h3>
-      <ul class="category-list">
-        <li data-category="home" class="active" onclick="renderPosts('home')">🏠 Home</li>
-        <li data-category="gallery" onclick="renderPosts('gallery')">🖼️ Gallery</li>
-        <li data-category="videos" onclick="renderPosts('videos')">🎬 Videos</li>
-        <li data-category="favorite" onclick="renderPosts('favorite')">⭐ Favorite</li>
-      </ul>
-    </div>
+  <aside class="sidebar">
+    <h3>Categories</h3>
+    <ul class="category-list">
+      <li data-category="home" class="active" onclick="renderPosts('home')">🏠 Home</li>
+      <li data-category="gallery" onclick="renderPosts('gallery')">🖼️ Gallery</li>
+      <li data-category="videos" onclick="renderPosts('videos')">🎬 Videos</li>
+      <li data-category="favorite" onclick="renderPosts('favorite')">⭐ Favorite</li>
+    </ul>
   </aside>
 
   <div class="container">
@@ -430,14 +432,15 @@
         }).join('') || ''}
         <div class="post-actions">
           <button onclick="editPost(${p.id})">📝 Edit</button>
-          <button onclick="deletePost(${p.id})">❌ Delete</button>
-          <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '🌟 Favorite'}</button>
+          <button onclick="deletePost(${p.id})">🗑️ Delete</button>
+          <button onclick="favoritePost(${p.id})">${p.favorite ? '💔 Unfavorite' : '❤️ Favorite'}</button>
         </div>
       </div>
-    `).join('') || '<p style="margin-top:20px;">No posts yet in this category.</p>';
+    `).join('');
   }
 
-  window.onload = () => renderPosts('home');
+  // Initial render
+  renderPosts(currentCategory);
 </script>
 
 </body>
