@@ -1,3 +1,6 @@
+# Saving the full updated HTML content with the requested features into a file
+
+html_content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -260,13 +263,6 @@
       background: #0f1a3a;
     }
 
-    .no-posts {
-      text-align: center;
-      padding: 40px;
-      font-size: 1.2rem;
-      color: #888;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -304,107 +300,129 @@
 
   <div class="container">
     <div class="section-title">Life Update</div>
-    <p>Welcome to my life update section! Here you can share new events, milestones, or stories.</p>
+    <p id="category-message">Welcome to my life update section! Here you can share new events, milestones, or stories.</p>
 
-    <div class="create-post">
+    <div class="create-post" id="create-post-section">
       <h3>Create a New Post</h3>
       <input type="text" id="title" placeholder="Post Title">
-      <textarea id="content" rows="4" placeholder="Write your post here..."></textarea>
-      <input type="file" id="fileInput" accept="image/*,video/*" onchange="previewMedia(event)">
-      <button onclick="submitPost()">Post</button>
-      <div id="preview"></div>
+      <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
+      <input type="file" multiple />
+      <button onclick="createPost()">Post</button>
     </div>
 
-    <div class="posts" id="posts"></div>
-    <div class="no-posts" id="noPostsMessage">No posts yet. Please create a post.</div>
+    <div id="posts-container"></div>
   </div>
 </div>
 
 <script>
-  let currentCategory = "home";
-  const posts = [];
-
-  // Handle the navigation between categories
-  document.querySelectorAll('.category-list li').forEach(item => {
-    item.addEventListener('click', (e) => {
-      document.querySelectorAll('.category-list li').forEach(i => i.classList.remove('active'));
-      e.target.classList.add('active');
-      currentCategory = e.target.getAttribute('data-category');
-      filterPosts();
-    });
-  });
-
-  // Preview media (image/video)
-  function previewMedia(event) {
-    const file = event.target.files[0];
-    const preview = document.getElementById('preview');
-    preview.innerHTML = ''; // Clear previous preview
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const media = document.createElement(file.type.startsWith('image') ? 'img' : 'video');
-        media.src = e.target.result;
-        media.style.width = '100%';
-        media.style.maxHeight = '300px';
-        media.controls = file.type.startsWith('video');
-        preview.appendChild(media);
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  // Filter posts based on category
-  function filterPosts() {
-    const filteredPosts = posts.filter(post => post.category === currentCategory);
-    displayPosts(filteredPosts);
-  }
-
-  // Display posts
-  function displayPosts(postsToDisplay) {
-    const postsContainer = document.getElementById('posts');
-    postsContainer.innerHTML = '';  // Clear current posts
-
-    if (postsToDisplay.length === 0) {
-      document.getElementById('noPostsMessage').style.display = 'block';
-    } else {
-      document.getElementById('noPostsMessage').style.display = 'none';
-      postsToDisplay.forEach(post => {
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
-        postElement.innerHTML = `
-          <div class="post-title">${post.title}</div>
-          <div class="post-content">${post.content}</div>
-          <div class="post-actions">
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        `;
-        postsContainer.appendChild(postElement);
-      });
-    }
-  }
-
-  // Submit a post
-  function submitPost() {
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
-
-    if (title && content) {
-      const newPost = {
-        title,
-        content,
-        category: currentCategory
-      };
-      posts.push(newPost);
-      displayPosts(posts);
-    }
-  }
-
-  // Toggle hamburger menu
   function toggleMenu() {
     document.getElementById('nav').classList.toggle('active');
   }
+
+  function createPost() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+
+    if (!title || !content) return alert('Please fill in all fields.');
+
+    const post = { id: Date.now(), title, content, favorite: false };
+    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    posts.unshift(post);
+    localStorage.setItem('lifePosts', JSON.stringify(posts));
+
+    document.getElementById('title').value = '';
+    document.getElementById('content').value = '';
+    renderPosts('home');
+  }
+
+  function deletePost(id) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    posts = posts.filter(p => p.id !== id);
+    localStorage.setItem('lifePosts', JSON.stringify(posts));
+    renderPosts(currentCategory);
+  }
+
+  function editPost(id) {
+    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const post = posts.find(p => p.id === id);
+    const newTitle = prompt('Edit title:', post.title);
+    const newContent = prompt('Edit content:', post.content);
+    if (newTitle && newContent) {
+      post.title = newTitle;
+      post.content = newContent;
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      renderPosts(currentCategory);
+    }
+  }
+
+  function favoritePost(id) {
+    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const post = posts.find(p => p.id === id);
+    post.favorite = !post.favorite;
+    localStorage.setItem('lifePosts', JSON.stringify(posts));
+    renderPosts(currentCategory);
+  }
+
+  let currentCategory = 'home';
+
+  function renderPosts(category) {
+    currentCategory = category;
+    const container = document.getElementById('posts-container');
+    const createSection = document.getElementById('create-post-section');
+    const message = document.getElementById('category-message');
+    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+
+    document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
+    document.querySelector(`[data-category="${category}"]`).classList.add('active');
+
+    if (category === 'home') {
+      createSection.style.display = 'block';
+      message.textContent = "Welcome to my life update section! Here you can share new events, milestones, or stories.";
+      container.innerHTML = posts.map(p => `
+        <div class="post">
+          <div class="post-title">${p.title}</div>
+          <div class="post-content">${p.content}</div>
+          <div class="post-actions">
+            <button onclick="editPost(${p.id})">📝 Edit</button>
+            <button onclick="deletePost(${p.id})">❌ Delete</button>
+            <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '⭐ Favorite'}</button>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      createSection.style.display = 'none';
+      let text = '';
+      if (category === 'gallery') text = "No Image Posted yet. Please post an image on the Home Category.";
+      if (category === 'videos') text = "No Videos Posted yet. Please post a video on the Home Category.";
+      if (category === 'favorite') text = "No Favorites Tag yet. Please mark a post as Favorite on the Home Category.";
+      message.textContent = text;
+      if (category === 'favorite') {
+        const favs = posts.filter(p => p.favorite);
+        container.innerHTML = favs.length ? favs.map(p => `
+          <div class="post">
+            <div class="post-title">${p.title}</div>
+            <div class="post-content">${p.content}</div>
+            <div class="post-actions">
+              <button onclick="editPost(${p.id})">📝 Edit</button>
+              <button onclick="deletePost(${p.id})">❌ Delete</button>
+              <button onclick="favoritePost(${p.id})">⭐ Unfavorite</button>
+            </div>
+          </div>
+        `).join('') : '';
+      } else {
+        container.innerHTML = '';
+      }
+    }
+  }
+
+  document.querySelectorAll('.category-list li').forEach(item => {
+    item.addEventListener('click', () => {
+      const category = item.getAttribute('data-category');
+      renderPosts(category);
+    });
+  });
+
+  window.onload = () => renderPosts('home');
 </script>
 
 </body>
