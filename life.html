@@ -399,11 +399,11 @@
     if (category === 'gallery') {
       filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('image/')));
       createSection.style.display = 'none';
-      message.textContent = "Explore the gallery of Bryan Gutierrez Ablao, where art, inspiration, and personal experiences blend into a unique visual story.";
+      message.textContent = "Explore the gallery where art, inspiration, and personal experiences blend into a unique visual story.";
     } else if (category === 'videos') {
       filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('video/')));
       createSection.style.display = 'none';
-      message.textContent = "Take a look at the videos of Bryan Gutierrez Ablao visuals that tell stories, from everyday moments to meaningful experiences.";
+      message.textContent = "Take a look at the videos visuals that tell stories, from everyday moments to meaningful experiences.";
     } else if (category === 'favorite') {
       filtered = posts.filter(p => p.favorite);
       createSection.style.display = 'none';
