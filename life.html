@@ -287,10 +287,10 @@
     <div class="sidebar">
       <h3>Categories</h3>
       <ul class="category-list">
-        <li data-category="home" class="active">🏠 Home</li>
-        <li data-category="gallery">🖼️ Gallery</li>
-        <li data-category="videos">🎬 Videos</li>
-        <li data-category="favorite">⭐ Favorite</li>
+        <li data-category="home" class="active" onclick="renderPosts('home')">🏠 Home</li>
+        <li data-category="gallery" onclick="renderPosts('gallery')">🖼️ Gallery</li>
+        <li data-category="videos" onclick="renderPosts('videos')">🎬 Videos</li>
+        <li data-category="favorite" onclick="renderPosts('favorite')">⭐ Favorite</li>
       </ul>
     </div>
   </aside>
@@ -317,45 +317,49 @@
   }
 
   function createPost() {
-  const title = document.getElementById('title').value;
-  const content = document.getElementById('content').value;
-  const fileInput = document.getElementById('file-upload');
-  const files = fileInput.files;
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    const fileInput = document.getElementById('file-upload');
+    const files = fileInput.files;
 
-  if (!title || !content) return alert('Please fill in all fields.');
+    if (!title || !content) return alert('Please fill in all fields.');
 
-  const readers = [];
-  const media = [];
+    const readers = [];
+    for (let i = 0; i < files.length; i++) {
+      readers.push(new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve({ name: files[i].name, type: files[i].type, data: reader.result });
+        reader.onerror = reject;
+        reader.readAsDataURL(files[i]);
+      }));
+    }
 
-  for (let i = 0; i < files.length; i++) {
-    readers.push(new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve({ name: files[i].name, type: files[i].type, data: reader.result });
-      reader.onerror = reject;
-      reader.readAsDataURL(files[i]);
-    }));
+    Promise.all(readers).then(media => {
+      const post = {
+        id: Date.now(),
+        title,
+        content,
+        favorite: false,
+        media
+      };
+
+      const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+      posts.unshift(post);
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+
+      document.getElementById('title').value = '';
+      document.getElementById('content').value = '';
+      fileInput.value = '';
+      renderPosts(currentCategory);
+    });
   }
 
-  Promise.all(readers).then(results => {
-    const post = {
-      id: Date.now(),
-      title,
-      content,
-      favorite: false,
-      media: results
-    };
-
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    posts.unshift(post);
+  function deletePost(id) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    posts = posts.filter(p => p.id !== id);
     localStorage.setItem('lifePosts', JSON.stringify(posts));
-
-    document.getElementById('title').value = '';
-    document.getElementById('content').value = '';
-    fileInput.value = '';
     renderPosts(currentCategory);
-  });
-}
-
+  }
 
   function editPost(id) {
     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
@@ -390,64 +394,48 @@
     document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
     document.querySelector(`[data-category="${category}"]`).classList.add('active');
 
-    if (category === 'home') {
+    let filtered = posts;
+
+    if (category === 'gallery') {
+      filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('image/')));
+      createSection.style.display = 'none';
+      message.textContent = "No Image Posted yet. Please post an image on the Home Category.";
+    } else if (category === 'videos') {
+      filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('video/')));
+      createSection.style.display = 'none';
+      message.textContent = "No Videos Posted yet. Please post a video on the Home Category.";
+    } else if (category === 'favorite') {
+      filtered = posts.filter(p => p.favorite);
+      createSection.style.display = 'none';
+      message.textContent = "No Favorites yet. Mark posts as ⭐ Favorite.";
+    } else {
       createSection.style.display = 'block';
       message.textContent = "Welcome to my life update section! Here you can share new events, milestones, or stories.";
-      container.innerHTML = posts.map(p => `
-  <div class="post">
-    <div class="post-title">${p.title}</div>
-    <div class="post-content">${p.content}</div>
-    ${p.media?.map(file => {
-      if (file.type.startsWith('image/')) {
-        return `<img src="${file.data}" alt="${file.name}" style="max-width:100%;margin-top:10px;border-radius:8px;">`;
-      } else if (file.type.startsWith('video/')) {
-        return `<video controls style="max-width:100%;margin-top:10px;border-radius:8px;">
-                  <source src="${file.data}" type="${file.type}">
-                  Your browser does not support the video tag.
-                </video>`;
-      }
-      return '';
-    }).join('') || ''}
-    <div class="post-actions">
-      <button onclick="editPost(${p.id})">📝 Edit</button>
-      <button onclick="deletePost(${p.id})">❌ Delete</button>
-      <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '⭐ Favorite'}</button>
-    </div>
-  </div>
-`).join('');
-
-    } else {
-      createSection.style.display = 'none';
-      let text = '';
-      if (category === 'gallery') text = "No Image Posted yet. Please post an image on the Home Category.";
-      if (category === 'videos') text = "No Videos Posted yet. Please post a video on the Home Category.";
-      if (category === 'favorite') text = "No Favorites Tag yet. Please mark a post as Favorite on the Home Category.";
-      message.textContent = text;
-      if (category === 'favorite') {
-        const favs = posts.filter(p => p.favorite);
-        container.innerHTML = favs.length ? favs.map(p => `
-          <div class="post">
-            <div class="post-title">${p.title}</div>
-            <div class="post-content">${p.content}</div>
-            <div class="post-actions">
-              <button onclick="editPost(${p.id})">📝 Edit</button>
-              <button onclick="deletePost(${p.id})">❌ Delete</button>
-              <button onclick="favoritePost(${p.id})">⭐ Unfavorite</button>
-            </div>
-          </div>
-        `).join('') : '';
-      } else {
-        container.innerHTML = '';
-      }
     }
-  }
 
-  document.querySelectorAll('.category-list li').forEach(item => {
-    item.addEventListener('click', () => {
-      const category = item.getAttribute('data-category');
-      renderPosts(category);
-    });
-  });
+    container.innerHTML = filtered.map(p => `
+      <div class="post">
+        <div class="post-title">${p.title}</div>
+        <div class="post-content">${p.content}</div>
+        ${p.media?.map(file => {
+          if (file.type.startsWith('image/')) {
+            return `<img src="${file.data}" alt="${file.name}" style="max-width:100%;margin-top:10px;border-radius:8px;">`;
+          } else if (file.type.startsWith('video/')) {
+            return `<video controls style="max-width:100%;margin-top:10px;border-radius:8px;">
+                      <source src="${file.data}" type="${file.type}">
+                      Your browser does not support the video tag.
+                    </video>`;
+          }
+          return '';
+        }).join('') || ''}
+        <div class="post-actions">
+          <button onclick="editPost(${p.id})">📝 Edit</button>
+          <button onclick="deletePost(${p.id})">❌ Delete</button>
+          <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '⭐ Favorite'}</button>
+        </div>
+      </div>
+    `).join('') || '<p style="margin-top:20px;">No posts yet in this category.</p>';
+  }
 
   window.onload = () => renderPosts('home');
 </script>
