@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resume - Bryan Gutierrez Ablao</title>
+  <title>Profile - Bryan Gutierrez Ablao</title>
   <link rel="icon" type="image/jpg" href="assets/profile.jpg" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,9 +14,10 @@
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #e6ecff, #ffffff);
       color: #333;
+      scroll-behavior: smooth;
     }
 
     header {
@@ -105,9 +107,10 @@
       max-width: 960px;
       margin: 40px auto;
       padding: 30px;
-      background: #fff;
+      background: #ffffff;
       border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.8s ease-in;
     }
 
     .top-section {
@@ -137,11 +140,28 @@
     }
 
     .section-title {
-      font-size: 20px;
+      font-size: 22px;
+      font-weight: 600;
       color: #1d2b53;
       margin: 35px 0 15px;
       border-left: 5px solid #1d2b53;
       padding-left: 12px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      bottom: -5px;
+      width: 40px;
+      height: 3px;
+      background: #1d2b53;
+      transition: width 0.3s ease;
+    }
+
+    .section-title:hover::after {
+      width: 100px;
     }
 
     .info-grid {
@@ -152,23 +172,39 @@
     }
 
     .info-grid div {
-      background: #f4f7fb;
+      background: #f9fbff;
       padding: 10px 15px;
       border-radius: 8px;
       font-size: 14px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .info-grid div:hover {
+      transform: translateY(-3px);
     }
 
     table {
       width: 100%;
       margin-top: 15px;
       border-collapse: collapse;
+      font-size: 14px;
+      background: #fff;
     }
 
     table td {
-      padding: 10px;
-      border: 1px solid #ddd;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
       text-align: center;
-      font-size: 14px;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    table td:first-child {
+      font-weight: bold;
+      color: #1d2b53;
     }
 
     .skills-references {
@@ -186,6 +222,10 @@
       padding-left: 18px;
     }
 
+    .skills li {
+      margin-bottom: 5px;
+    }
+
     .references div {
       background: #f2f5fc;
       padding: 10px;
@@ -197,6 +237,11 @@
       border: none;
       border-top: 2px solid #eee;
       margin: 40px 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -265,7 +310,7 @@
   </table>
 
   <hr>
-
+  
   <div class="skills-references">
     <div class="skills">
       <div class="section-title">Skills</div>
