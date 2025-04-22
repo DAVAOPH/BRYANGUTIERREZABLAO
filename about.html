@@ -251,7 +251,7 @@
     </div>
 
     <div class="family-member">
-      <img src="assets/kenneth.jpg" alt="Middle Brother" onclick="openModal(this.src)" />
+      <img src="assets/kenneth.jpg" alt="Middle Brother" onclick="openModal(this.src, 'Kenneth, you’ve always had that calm strength, mature mindset, and cool confidence that sets you apart. You’re more than a brother—you’re someone I truly look up to.')" />
       <div class="member-details">
         <a href="https://www.facebook.com/kenneth.ablao.12" target="_blank">Kenneth Angcos Gutierrez</a>
         <p>Birthdate: January 11, 2002</p>
@@ -262,7 +262,7 @@
     </div>
 
     <div class="family-member">
-      <img src="assets/riz.jpg" alt="Younger Brother" onclick="openModal(this.src)" />
+      <img src="assets/riz.jpg" alt="Younger Brother" onclick="openModal(this.src, 'Riz Evan, your musical talent, calm spirit, and unwavering faith in Jesus are just the beginning of what makes you amazing. You have a heart full of kindness and a mind that inspires those around you. I’m proud to have you as my brother, and I’m constantly learning from your strength and humility.')" />
       <div class="member-details">
         <a href="https://www.facebook.com/rizevan.ablao.73" target="_blank">Riz Evan Gutierrez Ablao</a>
         <p>Birthdate: December 30, 2003</p>
@@ -273,26 +273,33 @@
     </div>
 
   <!-- Modal -->
-  <div id="imageModal" class="modal" onclick="closeModal()">
+<div id="imageModal" class="modal" onclick="closeModal()">
+  <div style="text-align: center;">
     <img id="modalImage" src="" alt="Enlarged Image" />
+    <p id="modalMessage" style="color: white; font-size: 16px; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto; background-color: rgba(0,0,0,0.6); padding: 10px; border-radius: 10px;"></p>
   </div>
+</div>
+
 
   <script>
-    function toggleMenu() {
-      document.getElementById("nav").classList.toggle("active");
-    }
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("active");
+  }
 
-    function openModal(src) {
-      const modal = document.getElementById('imageModal');
-      const modalImage = document.getElementById('modalImage');
-      modalImage.src = src;
-      modal.classList.add('active');
-    }
+  function openModal(src, message) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalMessage = document.getElementById('modalMessage');
+    modalImage.src = src;
+    modalMessage.textContent = message;
+    modal.classList.add('active');
+  }
 
-    function closeModal() {
-      const modal = document.getElementById('imageModal');
-      modal.classList.remove('active');
-    }
-  </script>
+  function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+  }
+</script>
+
 </body>
 </html>
