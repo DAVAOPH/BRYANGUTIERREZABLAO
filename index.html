@@ -14,15 +14,8 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #f0f4ff, #ffffff);
+      background: linear-gradient(135deg, #e6ecff, #ffffff);
       color: #333;
-      line-height: 1.6;
-      animation: fadeIn 1.2s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
     }
 
     header {
@@ -35,7 +28,6 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .logo {
@@ -51,9 +43,8 @@
     }
 
     .logo span {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: bold;
-      letter-spacing: 0.5px;
     }
 
     .hamburger {
@@ -70,7 +61,7 @@
     nav a {
       color: white;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
       position: relative;
     }
 
@@ -82,7 +73,7 @@
       left: 0;
       bottom: -4px;
       background: white;
-      transition: 0.3s;
+      transition: width 0.3s;
     }
 
     nav a:hover::after {
@@ -97,12 +88,12 @@
       nav {
         display: none;
         flex-direction: column;
+        background: #1d2b53;
+        width: 100%;
         position: absolute;
         top: 60px;
         left: 0;
-        background: #1d2b53;
-        width: 100%;
-        padding: 15px 20px;
+        padding: 10px 20px;
       }
 
       nav.active {
@@ -112,96 +103,69 @@
 
     .container {
       max-width: 960px;
-      margin: 30px auto;
+      margin: 40px auto;
       padding: 30px;
-      background: white;
+      background: #fff;
       border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
     .top-section {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-.details {
-  flex: 1;
-  min-width: 250px;
-}
-
-    .profile-img img {
-      width: 180px;
-      height: 180px;
-      border-radius: 10px;
-      object-fit: cover;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
     }
 
-    .profile-img img:hover {
-      transform: scale(1.03);
+    .profile-img img {
+      width: 160px;
+      height: 160px;
+      border-radius: 10px;
+      object-fit: cover;
     }
 
     .details h2 {
-  font-size: 28px;
-  color: #1d2b53;
-  margin-bottom: 10px;
-}
-
-.details p {
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #444;
-}
-    .flex-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin: 15px 0;
-      gap: 15px;
+      font-size: 26px;
+      color: #1d2b53;
+      margin-bottom: 8px;
     }
 
-    .flex-row p {
-      flex: 1 1 30%;
-      background: #f7f9fc;
+    .details p {
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 5px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      color: #1d2b53;
+      margin: 35px 0 15px;
+      border-left: 5px solid #1d2b53;
+      padding-left: 12px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .info-grid div {
+      background: #f4f7fb;
       padding: 10px 15px;
       border-radius: 8px;
-      text-align: center;
       font-size: 14px;
-    }
-
-    .objective-section {
-      margin-top: 30px;
-    }
-
-    .objective-section h3,
-    h3 {
-      font-size: 22px;
-      color: #1d2b53;
-      margin-bottom: 15px;
-      border-left: 4px solid #1d2b53;
-      padding-left: 10px;
-    }
-
-    .objective-section p {
-      margin-bottom: 20px;
-    }
-
-    .flex-row > div {
-      flex: 1 1 45%;
-      margin-bottom: 10px;
     }
 
     table {
       width: 100%;
-      margin-top: 10px;
+      margin-top: 15px;
       border-collapse: collapse;
     }
 
     table td {
-      padding: 12px;
+      padding: 10px;
       border: 1px solid #ddd;
       text-align: center;
       font-size: 14px;
@@ -210,17 +174,16 @@
     .skills-references {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 30px;
+      gap: 30px;
+      margin-top: 25px;
     }
 
-    .skills,
-    .references {
+    .skills, .references {
       flex: 1 1 45%;
     }
 
     .skills ul {
-      padding-left: 20px;
+      padding-left: 18px;
     }
 
     .references div {
@@ -231,9 +194,9 @@
     }
 
     hr {
-      margin: 40px 0 30px;
       border: none;
       border-top: 2px solid #eee;
+      margin: 40px 0;
     }
   </style>
 </head>
@@ -255,59 +218,57 @@
 
 <div class="container">
   <div class="top-section">
-  <div class="profile-img">
-    <img src="assets/bryan.jpg" alt="Profile Picture">
+    <div class="profile-img">
+      <img src="assets/bryan.jpg" alt="Profile Picture">
     </div>
-      <div class="details">
-        <h2>Bryan Gutierrez Ablao</h2>
-        <p>Super Block 2 Baranggay 22 - C Piape Boulevard Davao City</p>
-        <p>ablaobryan4400@gmail.com</p>
-        <p>09928760990</p>
-      </div>
+    <div class="details">
+      <h2>Bryan Gutierrez Ablao</h2>
+      <p>Super Block 2 Brgy. 22-C, Piape Boulevard, Davao City</p>
+      <p><strong>Email:</strong> ablaobryan4400@gmail.com</p>
+      <p><strong>Contact:</strong> 09928760990</p>
     </div>
   </div>
 
-  <div class="objective-section">
-    <h3>Objective</h3>
-    <p>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</p>
+  <div class="section-title">Objective</div>
+  <p>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</p>
+
+  <hr>
+
+  <div class="section-title">Personal Information</div>
+  <div class="info-grid">
+    <div><strong>Birthdate:</strong> April 04, 2000</div>
+    <div><strong>Birthplace:</strong> Jose Fabella Metro Manila Hospital</div>
+    <div><strong>Status:</strong> Single</div>
+    <div><strong>Citizenship:</strong> Filipino</div>
+    <div><strong>Religion:</strong> Christian</div>
+    <div><strong>Gender:</strong> Male</div>
+    <div><strong>Father:</strong> Evaristo C. Ablao (Deceased)</div>
+    <div><strong>Mother:</strong> Annalie G. Ablao (Deceased)</div>
   </div>
 
   <hr>
-  
-  <div class="flex-row">
-    <div>Birthdate</div><div>April 04, 2000</div>
-    <div>Birthplace</div><div>Jose Fabella Metro Manila Hospital</div>
-    <div>Civil Status</div><div>Single</div>
-    <div>Citizenship</div><div>Filipino</div>
-    <div>Religion</div><div>Christian</div>
-    <div>Gender</div><div>Male</div>
-    <div>Father’s Name</div><div>Evaristo C. Ablao (Deceased)</div>
-    <div>Mother’s Name</div><div>Annalie G. Ablao (Deceased)</div>
-  </div>
 
-  <hr>
-  
-  <h3>Educational Background</h3>
+  <div class="section-title">Educational Background</div>
   <table>
-    <tr><td>College</td><td>Holy Cross of Davao College</td><td>(Under Graduate)</td></tr>
+    <tr><td>College</td><td>Holy Cross of Davao College</td><td>(Undergraduate)</td></tr>
     <tr><td>Senior High School</td><td>Samson Polytechnic College of Davao</td><td>S.Y. 2018</td></tr>
     <tr><td>Junior High School</td><td>Sta Ana National High School</td><td>S.Y. 2016</td></tr>
     <tr><td>Elementary</td><td>Sta Ana Elementary School</td><td>S.Y. 2012</td></tr>
   </table>
 
-  <h3>Work Experience</h3>
+  <div class="section-title">Work Experience</div>
   <table>
-    <tr><td>Call Center Agent</td><td>sixeleven</td><td>Jan. 2025 to Current</td></tr>
-    <tr><td>Encoder</td><td>Gmall Buhangin Warehouse</td><td>Feb. 2022 to Jan. 2023</td></tr>
-    <tr><td>Production Staff</td><td>Kc & Arc Prints</td><td>Oct. 2018 to Jan. 2022</td></tr>
-    <tr><td>Kitchen Crew</td><td>Chowking SPMC</td><td>June 2018 to Sept. 2018</td></tr>
+    <tr><td>Call Center Agent</td><td>sixeleven</td><td>Jan. 2025 – Present</td></tr>
+    <tr><td>Encoder</td><td>Gmall Buhangin Warehouse</td><td>Feb. 2022 – Jan. 2023</td></tr>
+    <tr><td>Production Staff</td><td>Kc & Arc Prints</td><td>Oct. 2018 – Jan. 2022</td></tr>
+    <tr><td>Kitchen Crew</td><td>Chowking SPMC</td><td>June 2018 – Sept. 2018</td></tr>
   </table>
 
   <hr>
 
   <div class="skills-references">
     <div class="skills">
-      <h3>Skills</h3>
+      <div class="section-title">Skills</div>
       <ul>
         <li>Communication</li>
         <li>Leadership</li>
@@ -318,7 +279,7 @@
       </ul>
     </div>
     <div class="references">
-      <h3>Character References</h3>
+      <div class="section-title">Character References</div>
       <div><strong>Mr. Thomas Wilkinson</strong><br>Leader of Church<br>09666829663</div>
       <div><strong>Kenneth G. Ablao</strong><br>Call Center Agent<br>09928760990</div>
     </div>
@@ -327,8 +288,7 @@
 
 <script>
   function toggleMenu() {
-    const nav = document.getElementById('nav');
-    nav.classList.toggle('active');
+    document.getElementById('nav').classList.toggle('active');
   }
 </script>
 
