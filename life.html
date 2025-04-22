@@ -108,12 +108,58 @@
       }
     }
 
-    .container {
-      max-width: 960px;
+    .layout {
+      display: flex;
+      max-width: 1200px;
       margin: 40px auto;
-      padding: 30px 20px;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: #f4f6ff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar h3 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: #1d2b53;
+    }
+
+    .category-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .category-list li {
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #fff;
+      border: 1px solid #dcdcdc;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .category-list li:hover {
+      background: #e6ecff;
+    }
+
+    .category-list li.active {
+      background: #1d2b53;
+      color: white;
+      font-weight: 600;
+    }
+
+    .container {
+      flex: 1;
       background: #ffffff;
       border-radius: 15px;
+      padding: 30px 20px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
       animation: fadeIn 0.8s ease-in;
     }
@@ -178,6 +224,42 @@
       background: #162043;
     }
 
+    .post {
+      background: #f2f4ff;
+      padding: 15px 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .post-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .post-content {
+      margin-bottom: 10px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .post-actions button {
+      background: #1d2b53;
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .post-actions button:hover {
+      background: #0f1a3a;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -200,19 +282,33 @@
   </nav>
 </header>
 
-<div class="container">
-  <div class="section-title">Life Update</div>
-  <p>Welcome to my life update section! Here you can share new events, milestones, or stories. Feel free to upload photos, videos, or any files.</p>
+<div class="layout">
+  <aside>
+    <div class="sidebar">
+      <h3>Categories</h3>
+      <ul class="category-list">
+        <li data-category="home" class="active">🏠 Home</li>
+        <li data-category="gallery">🖼️ Gallery</li>
+        <li data-category="videos">🎬 Videos</li>
+        <li data-category="favorite">⭐ Favorite</li>
+      </ul>
+    </div>
+  </aside>
 
-  <div class="create-post">
-    <h3>Create a New Post</h3>
-    <input type="text" placeholder="Post Title">
-    <textarea rows="5" placeholder="What's on your mind?"></textarea>
-    <input type="file" multiple />
-    <button>Post</button>
+  <div class="container">
+    <div class="section-title">Life Update</div>
+    <p>Welcome to my life update section! Here you can share new events, milestones, or stories.</p>
+
+    <div class="create-post">
+      <h3>Create a New Post</h3>
+      <input type="text" id="title" placeholder="Post Title">
+      <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
+      <input type="file" multiple />
+      <button onclick="createPost()">Post</button>
+    </div>
+
+    <div id="posts-container"></div>
   </div>
-
-  <div id="posts-container"></div>
 </div>
 
 <script>
@@ -220,101 +316,67 @@
     document.getElementById('nav').classList.toggle('active');
   }
 
-  const postsContainer = document.getElementById('posts-container');
-  const titleInput = document.querySelector('.create-post input[type="text"]');
-  const contentInput = document.querySelector('.create-post textarea');
-  const fileInput = document.querySelector('.create-post input[type="file"]');
-  const postButton = document.querySelector('.create-post button');
+  function createPost() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
 
-  postButton.addEventListener('click', () => {
-    const title = titleInput.value.trim();
-    const content = contentInput.value.trim();
-    const files = fileInput.files;
+    if (!title || !content) return alert('Please fill in all fields.');
 
-    if (!title && !content && files.length === 0) return;
+    const post = { id: Date.now(), title, content };
+    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    posts.unshift(post);
+    localStorage.setItem('lifePosts', JSON.stringify(posts));
 
-    const postDiv = document.createElement('div');
-    postDiv.style.marginTop = '20px';
-    postDiv.style.padding = '20px';
-    postDiv.style.border = '1px solid #ccc';
-    postDiv.style.borderRadius = '10px';
-    postDiv.style.background = '#f0f4ff';
-    postDiv.style.position = 'relative';
+    document.getElementById('title').value = '';
+    document.getElementById('content').value = '';
+    renderPosts();
+  }
 
-    const postTitle = document.createElement('h4');
-    postTitle.innerText = title;
-    postDiv.appendChild(postTitle);
+  function deletePost(id) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    posts = posts.filter(p => p.id !== id);
+    localStorage.setItem('lifePosts', JSON.stringify(posts));
+    renderPosts();
+  }
 
-    const postContent = document.createElement('p');
-    postContent.innerText = content;
-    postDiv.appendChild(postContent);
-
-    if (files.length > 0) {
-      const previewDiv = document.createElement('div');
-      previewDiv.style.display = 'flex';
-      previewDiv.style.flexWrap = 'wrap';
-      previewDiv.style.gap = '10px';
-      for (let file of files) {
-        if (file.type.startsWith('image/')) {
-          const img = document.createElement('img');
-          img.src = URL.createObjectURL(file);
-          img.style.width = '120px';
-          img.style.borderRadius = '6px';
-          img.style.objectFit = 'cover';
-          previewDiv.appendChild(img);
-        } else {
-          const fileName = document.createElement('p');
-          fileName.innerText = `📎 ${file.name}`;
-          previewDiv.appendChild(fileName);
-        }
-      }
-      postDiv.appendChild(previewDiv);
+  function editPost(id) {
+    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const post = posts.find(p => p.id === id);
+    const newTitle = prompt('Edit title:', post.title);
+    const newContent = prompt('Edit content:', post.content);
+    if (newTitle && newContent) {
+      post.title = newTitle;
+      post.content = newContent;
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      renderPosts();
     }
+  }
 
-    const buttonWrapper = document.createElement('div');
-    buttonWrapper.style.marginTop = '10px';
+  function renderPosts() {
+    const container = document.getElementById('posts-container');
+    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    container.innerHTML = posts.map(p => `
+      <div class="post">
+        <div class="post-title">${p.title}</div>
+        <div class="post-content">${p.content}</div>
+        <div class="post-actions">
+          <button onclick="editPost(${p.id})">📝Edit</button>
+          <button onclick="deletePost(${p.id})">🗑Delete</button>
+        </div>
+      </div>
+    `).join('');
+  }
 
-    const editBtn = document.createElement('button');
-    editBtn.innerText = 'Edit';
-    editBtn.style.marginRight = '10px';
-    editBtn.style.background = '#ffc107';
-    editBtn.style.border = 'none';
-    editBtn.style.padding = '5px 10px';
-    editBtn.style.borderRadius = '4px';
-    editBtn.style.cursor = 'pointer';
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.innerText = 'Delete';
-    deleteBtn.style.background = '#dc3545';
-    deleteBtn.style.border = 'none';
-    deleteBtn.style.padding = '5px 10px';
-    deleteBtn.style.borderRadius = '4px';
-    deleteBtn.style.color = '#fff';
-    deleteBtn.style.cursor = 'pointer';
-
-    buttonWrapper.appendChild(editBtn);
-    buttonWrapper.appendChild(deleteBtn);
-    postDiv.appendChild(buttonWrapper);
-
-    editBtn.addEventListener('click', () => {
-      const newTitle = prompt('Edit Title', postTitle.innerText);
-      const newContent = prompt('Edit Content', postContent.innerText);
-      if (newTitle !== null) postTitle.innerText = newTitle;
-      if (newContent !== null) postContent.innerText = newContent;
+  document.querySelectorAll('.category-list li').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
+      item.classList.add('active');
+      const category = item.getAttribute('data-category');
+      console.log('Selected category:', category);
     });
-
-    deleteBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to delete this post?')) {
-        postsContainer.removeChild(postDiv);
-      }
-    });
-
-    postsContainer.prepend(postDiv);
-
-    titleInput.value = '';
-    contentInput.value = '';
-    fileInput.value = '';
   });
+
+  window.onload = renderPosts;
 </script>
 
 </body>
