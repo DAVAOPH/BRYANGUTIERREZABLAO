@@ -120,12 +120,16 @@
     }
 
     .top-section {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.details {
+  flex: 1;
+  min-width: 250px;
+}
 
     .profile-img img {
       width: 180px;
@@ -141,11 +145,16 @@
     }
 
     .details h2 {
-      font-size: 32px;
-      color: #1d2b53;
-      margin-bottom: 10px;
-    }
+  font-size: 28px;
+  color: #1d2b53;
+  margin-bottom: 10px;
+}
 
+.details p {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #444;
+}
     .flex-row {
       display: flex;
       flex-wrap: wrap;
@@ -246,12 +255,11 @@
 
 <div class="container">
   <div class="top-section">
-    <div class="profile-img">
-      <img src="assets/bryan.jpg" alt="Profile Picture">
+  <div class="profile-img">
+    <img src="assets/bryan.jpg" alt="Profile Picture">
     </div>
-    <div class="details" id="details">
-      <h2>Bryan Gutierrez Ablao</h2>
-      <div class="flex-row">
+      <div class="details">
+        <h2>Bryan Gutierrez Ablao</h2>
         <p>Super Block 2 Baranggay 22 - C Piape Boulevard Davao City</p>
         <p>ablaobryan4400@gmail.com</p>
         <p>09928760990</p>
@@ -264,6 +272,8 @@
     <p>To secure a meaningful and growth-oriented career opportunity where I can leverage my expertise in human resource, management, computer software, and web development to contribute significantly to the organization's success.</p>
   </div>
 
+  <hr>
+  
   <div class="flex-row">
     <div>Birthdate</div><div>April 04, 2000</div>
     <div>Birthplace</div><div>Jose Fabella Metro Manila Hospital</div>
@@ -275,6 +285,8 @@
     <div>Mother’s Name</div><div>Annalie G. Ablao (Deceased)</div>
   </div>
 
+  <hr>
+  
   <h3>Educational Background</h3>
   <table>
     <tr><td>College</td><td>Holy Cross of Davao College</td><td>(Under Graduate)</td></tr>
