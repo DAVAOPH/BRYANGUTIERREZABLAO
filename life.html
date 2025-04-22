@@ -395,20 +395,7 @@
     document.querySelector(`[data-category="${category}"]`).classList.add('active');
 
     let filtered = posts;
-
-    if (category === 'gallery') {
-      filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('image/')));
-      createSection.style.display = 'none';
-      message.textContent = "No Image Posted yet. Please post an image on the Home Category.";
-    } else if (category === 'videos') {
-      filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('video/')));
-      createSection.style.display = 'none';
-      message.textContent = "No Videos Posted yet. Please post a video on the Home Category.";
-    } else if (category === 'favorite') {
-      filtered = posts.filter(p => p.favorite);
-      createSection.style.display = 'none';
-      message.textContent = "No Favorites yet. Mark posts as ⭐ Favorite.";
-    } else {
+    else {
       createSection.style.display = 'block';
       message.textContent = "Welcome to my life update section! Here you can share new events, milestones, or stories.";
     }
