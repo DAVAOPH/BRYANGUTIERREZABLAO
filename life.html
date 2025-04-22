@@ -303,7 +303,7 @@
       <h3>Create a New Post</h3>
       <input type="text" id="title" placeholder="Post Title">
       <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
-      <input type="file" multiple />
+      <input type="file" id="file-upload" multiple accept="image/*,video/*">
       <button onclick="createPost()">Post</button>
     </div>
 
@@ -317,27 +317,45 @@
   }
 
   function createPost() {
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
+  const title = document.getElementById('title').value;
+  const content = document.getElementById('content').value;
+  const fileInput = document.getElementById('file-upload');
+  const files = fileInput.files;
 
-    if (!title || !content) return alert('Please fill in all fields.');
+  if (!title || !content) return alert('Please fill in all fields.');
 
-    const post = { id: Date.now(), title, content, favorite: false };
+  const readers = [];
+  const media = [];
+
+  for (let i = 0; i < files.length; i++) {
+    readers.push(new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({ name: files[i].name, type: files[i].type, data: reader.result });
+      reader.onerror = reject;
+      reader.readAsDataURL(files[i]);
+    }));
+  }
+
+  Promise.all(readers).then(results => {
+    const post = {
+      id: Date.now(),
+      title,
+      content,
+      favorite: false,
+      media: results
+    };
+
     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
     posts.unshift(post);
     localStorage.setItem('lifePosts', JSON.stringify(posts));
 
     document.getElementById('title').value = '';
     document.getElementById('content').value = '';
-    renderPosts('home');
-  }
-
-  function deletePost(id) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    posts = posts.filter(p => p.id !== id);
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
+    fileInput.value = '';
     renderPosts(currentCategory);
-  }
+  });
+}
+
 
   function editPost(id) {
     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
@@ -376,16 +394,28 @@
       createSection.style.display = 'block';
       message.textContent = "Welcome to my life update section! Here you can share new events, milestones, or stories.";
       container.innerHTML = posts.map(p => `
-        <div class="post">
-          <div class="post-title">${p.title}</div>
-          <div class="post-content">${p.content}</div>
-          <div class="post-actions">
-            <button onclick="editPost(${p.id})">📝 Edit</button>
-            <button onclick="deletePost(${p.id})">❌ Delete</button>
-            <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '⭐ Favorite'}</button>
-          </div>
-        </div>
-      `).join('');
+  <div class="post">
+    <div class="post-title">${p.title}</div>
+    <div class="post-content">${p.content}</div>
+    ${p.media?.map(file => {
+      if (file.type.startsWith('image/')) {
+        return `<img src="${file.data}" alt="${file.name}" style="max-width:100%;margin-top:10px;border-radius:8px;">`;
+      } else if (file.type.startsWith('video/')) {
+        return `<video controls style="max-width:100%;margin-top:10px;border-radius:8px;">
+                  <source src="${file.data}" type="${file.type}">
+                  Your browser does not support the video tag.
+                </video>`;
+      }
+      return '';
+    }).join('') || ''}
+    <div class="post-actions">
+      <button onclick="editPost(${p.id})">📝 Edit</button>
+      <button onclick="deletePost(${p.id})">❌ Delete</button>
+      <button onclick="favoritePost(${p.id})">${p.favorite ? '⭐ Unfavorite' : '⭐ Favorite'}</button>
+    </div>
+  </div>
+`).join('');
+
     } else {
       createSection.style.display = 'none';
       let text = '';
