@@ -345,7 +345,10 @@
         content,
         favorite: false,
         media,
-        category: currentCategory
+        category: currentCategory,
+        datePosted: new Date().toLocaleString(),
+        reactions: { like: 0, love: 0 },
+        comments: []
       };
 
       const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
@@ -392,6 +395,31 @@
     }
   }
 
+  function toggleReaction(id, type) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const index = posts.findIndex(p => p.id === id);
+    if (index !== -1) {
+      posts[index].reactions[type]++;
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      renderPosts(currentCategory);
+    }
+  }
+
+  function addComment(id) {
+    const commentInput = document.getElementById(`comment-input-${id}`);
+    const commentText = commentInput.value;
+    if (!commentText) return;
+
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const index = posts.findIndex(p => p.id === id);
+    if (index !== -1) {
+      posts[index].comments.push({ user: 'Current User', comment: commentText, date: new Date().toLocaleString() });
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      commentInput.value = '';
+      renderPosts(currentCategory);
+    }
+  }
+
   function renderPosts(category) {
     currentCategory = category;
 
@@ -426,6 +454,38 @@
       content.className = 'post-content';
       content.textContent = post.content;
 
+      const datePosted = document.createElement('div');
+      datePosted.className = 'post-date';
+      datePosted.textContent = `Posted on ${post.datePosted}`;
+
+      const reactions = document.createElement('div');
+      reactions.className = 'post-reactions';
+      const likeBtn = document.createElement('button');
+      likeBtn.textContent = `👍 Like (${post.reactions.like})`;
+      likeBtn.onclick = () => toggleReaction(post.id, 'like');
+      const loveBtn = document.createElement('button');
+      loveBtn.textContent = `❤️ Love (${post.reactions.love})`;
+      loveBtn.onclick = () => toggleReaction(post.id, 'love');
+      reactions.append(likeBtn, loveBtn);
+
+      const commentsSection = document.createElement('div');
+      commentsSection.className = 'post-comments';
+      post.comments.forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.className = 'comment';
+        commentDiv.innerHTML = `<strong>${comment.user}:</strong> ${comment.comment} <br><small>${comment.date}</small>`;
+        commentsSection.appendChild(commentDiv);
+      });
+
+      const commentInput = document.createElement('textarea');
+      commentInput.id = `comment-input-${post.id}`;
+      commentInput.placeholder = 'Add a comment...';
+      const commentBtn = document.createElement('button');
+      commentBtn.textContent = 'Post Comment';
+      commentBtn.onclick = () => addComment(post.id);
+      commentsSection.appendChild(commentInput);
+      commentsSection.appendChild(commentBtn);
+
       const actions = document.createElement('div');
       actions.className = 'post-actions';
 
@@ -443,26 +503,46 @@
 
       actions.append(editBtn, deleteBtn, favBtn);
 
-      // Media preview
+      // Media preview (Image Carousel/Slider)
       const mediaContainer = document.createElement('div');
+      const carouselContainer = document.createElement('div');
+      carouselContainer.className = 'carousel-container';
       post.media.forEach(file => {
         if (file.type.startsWith('image/')) {
           const img = document.createElement('img');
           img.src = file.data;
           img.style.maxWidth = '100%';
           img.style.marginTop = '10px';
-          mediaContainer.appendChild(img);
-        } else if (file.type.startsWith('video/')) {
-          const video = document.createElement('video');
-          video.src = file.data;
-          video.controls = true;
-          video.style.maxWidth = '100%';
-          video.style.marginTop = '10px';
-          mediaContainer.appendChild(video);
+          carouselContainer.appendChild(img);
         }
       });
 
-      div.append(title, content, mediaContainer, actions);
+      if (carouselContainer.childNodes.length > 1) {
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = '◀';
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = '▶';
+        mediaContainer.append(prevBtn, carouselContainer, nextBtn);
+        let currentIndex = 0;
+        const updateCarousel = () => {
+          carouselContainer.childNodes.forEach((img, index) => {
+            img.style.display = index === currentIndex ? 'block' : 'none';
+          });
+        };
+        prevBtn.onclick = () => {
+          currentIndex = (currentIndex === 0) ? carouselContainer.childNodes.length - 1 : currentIndex - 1;
+          updateCarousel();
+        };
+        nextBtn.onclick = () => {
+          currentIndex = (currentIndex === carouselContainer.childNodes.length - 1) ? 0 : currentIndex + 1;
+          updateCarousel();
+        };
+        updateCarousel();
+      } else {
+        mediaContainer.appendChild(carouselContainer);
+      }
+
+      div.append(title, content, datePosted, reactions, mediaContainer, commentsSection, actions);
       container.appendChild(div);
     });
   }
@@ -471,6 +551,7 @@
     renderPosts('home');
   };
 </script>
+
 
 </body>
 </html>
