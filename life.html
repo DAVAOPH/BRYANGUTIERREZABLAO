@@ -343,6 +343,43 @@
   background-color: #f44336;
   color: white;
 }
+
+/* Input fields and textareas on focus */
+input:focus, textarea:focus {
+  border: 2px solid #1d2b53;  /* Add a border when focused */
+  outline: none;               /* Remove default outline */
+  box-shadow: 0 0 5px rgba(29, 43, 83, 0.5); /* Add subtle shadow */
+}
+
+/* File input focus styling */
+#file-upload:focus {
+  border: 2px solid #1d2b53;   /* Focus border for file input */
+  box-shadow: 0 0 5px rgba(29, 43, 83, 0.5);  /* Add shadow for focus effect */
+}
+
+/* Style for the preview container */
+#preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Style for individual preview items */
+.preview-item {
+  max-width: 200px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.preview-item img,
+.preview-item video {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
   </style>
 </head>
 <body>
@@ -465,7 +502,6 @@
       modal.style.display = 'none';
     };
 
-    // Optional: Close modal when clicking outside
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = 'none';
@@ -473,72 +509,35 @@
     };
   }
 
- function toggleFavorite(id) {
-  let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-  const post = posts.find(p => p.id === id);
-  if (post) {
-    post.favorite = !post.favorite;
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-    renderPosts(currentCategory);
+  function toggleFavorite(id) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const post = posts.find(p => p.id === id);
+    if (post) {
+      post.favorite = !post.favorite;
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      renderPosts(currentCategory);
+    }
   }
-}
 
-function renderPosts(category) {
-  currentCategory = category;
-  const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-  const filteredPosts = posts.filter(post => post.category === category);
-
-  const postsContainer = document.getElementById('posts-container');
-  postsContainer.innerHTML = '';
-
-  filteredPosts.forEach(post => {
-    const postElement = document.createElement('div');
-    postElement.classList.add('post');
-    postElement.innerHTML = `
-      <div class="post-title">${post.title}</div>
-      <div class="post-content">${post.content}</div>
-      <div class="post-actions">
-        <button onclick="editPost(${post.id})">✒️Edit</button>
-        <button onclick="deletePost(${post.id})">🔥Delete</button>
-        <button onclick="toggleFavorite(${post.id})">${post.favorite ? '💔Unfavorite' : '⭐Favorite'}</button>
-      </div>
-      <div class="reaction-buttons">
-        <button onclick="likePost(${post.id})">👍 ${post.reactions.like}</button>
-        <button onclick="lovePost(${post.id})">❤️ ${post.reactions.love}</button>
-      </div>
-      <div class="media">
-        ${post.media.map(file => `<img src="${file.data}" alt="${file.name}" width="100" />`).join('')}
-      </div>
-    `;
-    postsContainer.appendChild(postElement);
-  });
-}
-
-function likePost(id) {
-  let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-  const post = posts.find(p => p.id === id);
-  if (post) {
-    post.reactions.like += 1;
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-    renderPosts(currentCategory);
+  function likePost(id) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const post = posts.find(p => p.id === id);
+    if (post) {
+      post.reactions.like += 1;
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      renderPosts(currentCategory);
+    }
   }
-}
 
-function lovePost(id) {
-  let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-  const post = posts.find(p => p.id === id);
-  if (post) {
-    post.reactions.love += 1;
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-    renderPosts(currentCategory);
+  function lovePost(id) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const post = posts.find(p => p.id === id);
+    if (post) {
+      post.reactions.love += 1;
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      renderPosts(currentCategory);
+    }
   }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  renderPosts(currentCategory);
-});
-
-
 
   function toggleReaction(id, type) {
     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
@@ -690,19 +689,42 @@ document.addEventListener('DOMContentLoaded', function() {
       container.appendChild(div);
     });
   }
+  <!-- Post Creation Section -->
+<div class="create-post">
+  <input type="text" id="post-title" placeholder="Post Title">
+  <textarea id="post-content" placeholder="Write your post..."></textarea>
+  
+  document.getElementById('file-upload').addEventListener('change', function(event) {
+  const previewContainer = document.getElementById('preview-container');
+  previewContainer.innerHTML = ''; // Clear previous previews
 
-  window.onload = () => {
-    renderPosts('home');
-  };
-</script>
-<div id="editModal" class="modal">
-  <div class="modal-content">
-    <textarea id="editText"></textarea>
-    <div class="modal-buttons">
-      <button id="saveEdit" class="save-btn">Save</button>
-      <button id="cancelEdit" class="cancel-btn">Cancel</button>
-    </div>
-  </div>
-</div>
+  const files = event.target.files;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+      const preview = document.createElement('div');
+      preview.classList.add('preview-item');
+      
+      if (file.type.startsWith('image')) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = file.name;
+        preview.appendChild(img);
+      } else if (file.type.startsWith('video')) {
+        const video = document.createElement('video');
+        video.src = e.target.result;
+        video.controls = true;
+        preview.appendChild(video);
+      }
+
+      previewContainer.appendChild(preview);
+    };
+
+    reader.readAsDataURL(file);
+  }
+});
 </body>
 </html>
