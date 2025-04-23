@@ -18,7 +18,7 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', sans-serif;f
       background: linear-gradient(135deg, #e6ecff, #ffffff);
       color: #333;
       scroll-behavior: smooth;
@@ -498,9 +498,9 @@ function renderPosts(category) {
       <div class="post-title">${post.title}</div>
       <div class="post-content">${post.content}</div>
       <div class="post-actions">
-        <button onclick="editPost(${post.id})">📝Edit</button>
-        <button onclick="deletePost(${post.id})">❎Delete</button>
-        <button onclick="toggleFavorite(${post.id})">${post.favorite ? '⭐Unfavorite' : '🌟Favorite'}</button>
+        <button onclick="editPost(${post.id})">✒️Edit</button>
+        <button onclick="deletePost(${post.id})">🔥Delete</button>
+        <button onclick="toggleFavorite(${post.id})">${post.favorite ? '💔Unfavorite' : '⭐Favorite'}</button>
       </div>
       <div class="reaction-buttons">
         <button onclick="likePost(${post.id})">👍 ${post.reactions.like}</button>
@@ -634,15 +634,15 @@ document.addEventListener('DOMContentLoaded', function() {
       actions.className = 'post-actions';
 
       const editBtn = document.createElement('button');
-      editBtn.textContent = 'Edit';
+      editBtn.textContent = '✒️Edit';
       editBtn.onclick = () => editPost(post.id);
 
       const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Delete';
+      deleteBtn.textContent = '🔥Delete';
       deleteBtn.onclick = () => deletePost(post.id);
 
       const favBtn = document.createElement('button');
-      favBtn.textContent = post.favorite ? 'Unfavorite' : 'Favorite';
+      favBtn.textContent = post.favorite ? '💔Unfavorite' : '⭐Favorite';
       favBtn.onclick = () => toggleFavorite(post.id);
 
       actions.append(editBtn, deleteBtn, favBtn);
@@ -663,9 +663,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (carouselContainer.childNodes.length > 1) {
         const prevBtn = document.createElement('button');
-        prevBtn.textContent = '◀';
+        prevBtn.textContent = '◀️';
         const nextBtn = document.createElement('button');
-        nextBtn.textContent = '▶';
+        nextBtn.textContent = '▶️';
         mediaContainer.append(prevBtn, carouselContainer, nextBtn);
         let currentIndex = 0;
         const updateCarousel = () => {
