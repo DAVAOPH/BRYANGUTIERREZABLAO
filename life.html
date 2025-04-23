@@ -1,730 +1,709 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Life Update - Bryan Gutierrez Ablao</title>
-  <link rel="icon" type="image/jpg" href="assets/profile.jpg" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      font-size: 16px;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #e6ecff, #ffffff);
-      color: #333;
-      scroll-behavior: smooth;
-    }
-
-    header {
-      background: #1d2b53;
-      color: white;
-      padding: 15px 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-    }
-
-    .logo span {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .hamburger {
-      font-size: 1.8rem;
-      cursor: pointer;
-      display: none;
-    }
-
-    nav {
-      display: flex;
-      gap: 20px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      position: relative;
-    }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      left: 0;
-      bottom: -4px;
-      background: white;
-      transition: width 0.3s;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
-
-      nav {
-        display: none;
-        flex-direction: column;
-        background: #1d2b53;
-        width: 100%;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        padding: 10px 20px;
-      }
-
-      nav.active {
-        display: flex;
-      }
-    }
-
-    .layout {
-      display: flex;
-      max-width: 1200px;
-      margin: 40px auto;
-      gap: 20px;
-      padding: 0 20px;
-      flex-wrap: wrap;
-    }
-
-    .sidebar {
-      width: 100%;
-      max-width: 250px;
-      background: #f4f6ff;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .sidebar h3 {
-      font-size: 1.1rem;
-      margin-bottom: 15px;
-      color: #1d2b53;
-    }
-
-    .category-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .category-list li {
-      padding: 10px;
-      margin-bottom: 8px;
-      background: #fff;
-      border: 1px solid #dcdcdc;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .category-list li:hover {
-      background: #e6ecff;
-    }
-
-    .category-list li.active {
-      background: #1d2b53;
-      color: white;
-      font-weight: 600;
-    }
-
-    .container {
-      flex: 1;
-      min-width: 300px;
-      background: #ffffff;
-      border-radius: 15px;
-      padding: 30px 20px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-      animation: fadeIn 0.8s ease-in;
-    }
-
-    .section-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #1d2b53;
-      margin: 35px 0 15px;
-      border-left: 5px solid #1d2b53;
-      padding-left: 12px;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      left: 12px;
-      bottom: -5px;
-      width: 40px;
-      height: 3px;
-      background: #1d2b53;
-      transition: width 0.3s ease;
-    }
-
-    .section-title:hover::after {
-      width: 100px;
-    }
-
-    .create-post {
-      margin-top: 20px;
-      padding: 20px;
-      background: #f9fbff;
-      border: 2px dashed #ccc;
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    .create-post input,
-    .create-post textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-    }
-
-    .create-post button {
-      padding: 10px 20px;
-      background: #1d2b53;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .create-post button:hover {
-      background: #162043;
-    }
-
-    .post {
-      background: #f2f4ff;
-      padding: 15px 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-      position: relative;
-    }
-
-    .post-title {
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .post-content {
-      margin-bottom: 10px;
-    }
-
-    .post-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .post-actions button {
-      background: #1d2b53;
-      color: white;
-      border: none;
-      padding: 5px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-
-    .post-actions button:hover {
-      background: #0f1a3a;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    /* Reaction Buttons */
-.reaction-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-.reaction-buttons button {
-  background: transparent;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-.reaction-buttons button:hover {
-  transform: scale(1.2);
-}
-
-/* Edit Button */
-.edit-button {
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 8px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 10px;
-}
-
-/* Modal Style */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-}
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.modal textarea {
-  width: 100%;
-  height: 150px;
-  border-radius: 10px;
-  padding: 10px;
-  resize: vertical;
-  font-size: 1rem;
-}
-.modal-buttons {
-  text-align: right;
-  margin-top: 10px;
-}
-.modal-buttons button {
-  margin-left: 10px;
-  padding: 8px 14px;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.save-btn {
-  background-color: #4CAF50;
-  color: white;
-}
-.cancel-btn {
-  background-color: #f44336;
-  color: white;
-}
-
-/* Input fields and textareas on focus */
-input:focus, textarea:focus {
-  border: 2px solid #1d2b53;  /* Add a border when focused */
-  outline: none;               /* Remove default outline */
-  box-shadow: 0 0 5px rgba(29, 43, 83, 0.5); /* Add subtle shadow */
-}
-
-/* File input focus styling */
-#file-upload:focus {
-  border: 2px solid #1d2b53;   /* Focus border for file input */
-  box-shadow: 0 0 5px rgba(29, 43, 83, 0.5);  /* Add shadow for focus effect */
-}
-
-/* Style for the preview container */
-#preview-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-/* Style for individual preview items */
-.preview-item {
-  max-width: 200px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.preview-item img,
-.preview-item video {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-  </style>
-</head>
-<body>
-
-<header>
-  <div class="logo">
-    <img src="assets/bryan.jpg" alt="Profile">
-    <span>Bryan Gutierrez Ablao</span>
-  </div>
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
-  <nav id="nav">
-    <a href="index.html">Profile</a>
-    <a href="about.html">About Me</a>
-    <a href="life.html">Life Update</a>
-    <a href="contact.html">Contact Me</a>
-  </nav>
-</header>
-
-<div class="layout">
-  <aside class="sidebar">
-    <h3>Categories</h3>
-    <ul class="category-list">
-      <li data-category="home" class="active" onclick="renderPosts('home')">🏠 Home</li>
-      <li data-category="gallery" onclick="renderPosts('gallery')">🖼️ Gallery</li>
-      <li data-category="videos" onclick="renderPosts('videos')">🎬 Videos</li>
-      <li data-category="favorite" onclick="renderPosts('favorite')">⭐ Favorite</li>
-    </ul>
-  </aside>
-
-  <div class="container">
-    <div class="section-title">Life Update</div>
-    <p id="category-message">Welcome to my life update section! Here you can share new events, milestones, or stories.</p>
-
-    <div class="create-post" id="create-post-section">
-      <h3>Create a New Post</h3>
-      <input type="text" id="title" placeholder="Post Title">
-      <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
-      <input type="file" id="file-upload" multiple accept="image/*,video/*">
-      <button onclick="createPost()">Post</button>
-    </div>
-
-    <div id="posts-container"></div>
-  </div>
-</div>
-
-<script>
-  let currentCategory = 'home';
-
-  function toggleMenu() {
-    document.getElementById('nav').classList.toggle('active');
-  }
-
-  function createPost() {
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
-    const fileInput = document.getElementById('file-upload');
-    const files = fileInput.files;
-
-    if (!title || !content) return alert('Please fill in all fields.');
-
-    const readers = [];
-    for (let i = 0; i < files.length; i++) {
-      readers.push(new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve({ name: files[i].name, type: files[i].type, data: reader.result });
-        reader.onerror = reject;
-        reader.readAsDataURL(files[i]);
-      }));
-    }
-
-    Promise.all(readers).then(media => {
-      const post = {
-        id: Date.now(),
-        title,
-        content,
-        favorite: false,
-        media,
-        category: currentCategory,
-        datePosted: new Date().toLocaleString(),
-        reactions: { like: 0, love: 0 },
-        comments: []
-      };
-
-      const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-      posts.unshift(post);
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-
-      document.getElementById('title').value = '';
-      document.getElementById('content').value = '';
-      fileInput.value = '';
-      renderPosts(currentCategory);
-    });
-  }
-
-  function deletePost(id) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    posts = posts.filter(p => p.id !== id);
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-    renderPosts(currentCategory);
-  }
-
-  function editPost(id) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const index = posts.findIndex(p => p.id === id);
-    if (index === -1) return;
-
-    const modal = document.getElementById('editModal');
-    const textarea = document.getElementById('editText');
-    textarea.value = posts[index].content;
-    modal.style.display = 'flex';
-
-    document.getElementById('saveEdit').onclick = () => {
-      posts[index].content = textarea.value;
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-      renderPosts(currentCategory);
-      modal.style.display = 'none';
-    };
-
-    document.getElementById('cancelEdit').onclick = () => {
-      modal.style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = 'none';
-      }
-    };
-  }
-
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <title>Life Update - Bryan Gutierrez Ablao</title>
+   <link rel="icon" type="image/jpg" href="assets/profile.jpg" />
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+   <style>
+     * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+     }
+ 
+     html {
+       font-size: 16px;
+     }
+ 
+     body {
+       font-family: 'Poppins', sans-serif;f
+       font-family: 'Poppins', sans-serif;
+       background: linear-gradient(135deg, #e6ecff, #ffffff);
+       color: #333;
+       scroll-behavior: smooth;
+     }
+ 
+     header {
+       background: #1d2b53;
+       color: white;
+       padding: 15px 25px;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       position: sticky;
+       top: 0;
+       z-index: 1000;
+       flex-wrap: wrap;
+     }
+ 
+     .logo {
+       display: flex;
+       align-items: center;
+       gap: 10px;
+     }
+ 
+     .logo img {
+       width: 40px;
+       height: 40px;
+       border-radius: 8px;
+     }
+ 
+     .logo span {
+       font-size: 1.2rem;
+       font-weight: bold;
+     }
+ 
+     .hamburger {
+       font-size: 1.8rem;
+       cursor: pointer;
+       display: none;
+     }
+ 
+     nav {
+       display: flex;
+       gap: 20px;
+     }
+ 
+     nav a {
+       color: white;
+       text-decoration: none;
+       font-size: 1rem;
+       position: relative;
+     }
+ 
+     nav a::after {
+       content: "";
+       position: absolute;
+       width: 0;
+       height: 2px;
+       left: 0;
+       bottom: -4px;
+       background: white;
+       transition: width 0.3s;
+     }
+ 
+     nav a:hover::after {
+       width: 100%;
+     }
+ 
+     @media (max-width: 768px) {
+       .hamburger {
+         display: block;
+       }
+ 
+       nav {
+         display: none;
+         flex-direction: column;
+         background: #1d2b53;
+         width: 100%;
+         position: absolute;
+         top: 60px;
+         left: 0;
+         padding: 10px 20px;
+       }
+ 
+       nav.active {
+         display: flex;
+       }
+     }
+ 
+     .layout {
+       display: flex;
+       max-width: 1200px;
+       margin: 40px auto;
+       gap: 20px;
+       padding: 0 20px;
+       flex-wrap: wrap;
+     }
+ 
+     .sidebar {
+       width: 100%;
+       max-width: 250px;
+       background: #f4f6ff;
+       border-radius: 10px;
+       padding: 20px;
+       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
+     }
+ 
+     .sidebar h3 {
+       font-size: 1.1rem;
+       margin-bottom: 15px;
+       color: #1d2b53;
+     }
+ 
+     .category-list {
+       list-style: none;
+       padding: 0;
+     }
+ 
+     .category-list li {
+       padding: 10px;
+       margin-bottom: 8px;
+       background: #fff;
+       border: 1px solid #dcdcdc;
+       border-radius: 6px;
+       cursor: pointer;
+       transition: background 0.3s ease;
+     }
+ 
+     .category-list li:hover {
+       background: #e6ecff;
+     }
+ 
+     .category-list li.active {
+       background: #1d2b53;
+       color: white;
+       font-weight: 600;
+     }
+ 
+     .container {
+       flex: 1;
+       min-width: 300px;
+       background: #ffffff;
+       border-radius: 15px;
+       padding: 30px 20px;
+       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+       animation: fadeIn 0.8s ease-in;
+     }
+ 
+     .section-title {
+       font-size: 1.4rem;
+       font-weight: 600;
+       color: #1d2b53;
+       margin: 35px 0 15px;
+       border-left: 5px solid #1d2b53;
+       padding-left: 12px;
+       position: relative;
+     }
+ 
+     .section-title::after {
+       content: '';
+       position: absolute;
+       left: 12px;
+       bottom: -5px;
+       width: 40px;
+       height: 3px;
+       background: #1d2b53;
+       transition: width 0.3s ease;
+     }
+ 
+     .section-title:hover::after {
+       width: 100px;
+     }
+ 
+     .create-post {
+       margin-top: 20px;
+       padding: 20px;
+       background: #f9fbff;
+       border: 2px dashed #ccc;
+       border-radius: 10px;
+       text-align: center;
+     }
+ 
+     .create-post input,
+     .create-post textarea {
+       width: 100%;
+       padding: 10px;
+       margin-top: 10px;
+       margin-bottom: 15px;
+       border-radius: 6px;
+       border: 1px solid #ddd;
+       font-family: 'Poppins', sans-serif;
+       font-size: 1rem;
+     }
+ 
+     .create-post button {
+       padding: 10px 20px;
+       background: #1d2b53;
+       color: white;
+       border: none;
+       border-radius: 6px;
+       cursor: pointer;
+       font-size: 1rem;
+     }
+ 
+     .create-post button:hover {
+       background: #162043;
+     }
+ 
+     .post {
+       background: #f2f4ff;
+       padding: 15px 20px;
+       margin-top: 20px;
+       border-radius: 10px;
+       position: relative;
+     }
+ 
+     .post-title {
+       font-weight: bold;
+       margin-bottom: 8px;
+     }
+ 
+     .post-content {
+       margin-bottom: 10px;
+     }
+ 
+     .post-actions {
+       display: flex;
+       gap: 10px;
+       flex-wrap: wrap;
+     }
+ 
+     .post-actions button {
+       background: #1d2b53;
+       color: white;
+       border: none;
+       padding: 5px 12px;
+       border-radius: 5px;
+       cursor: pointer;
+       font-size: 0.85rem;
+     }
+ 
+     .post-actions button:hover {
+       background: #0f1a3a;
+     }
+ 
+     @keyframes fadeIn {
+       from { opacity: 0; transform: translateY(20px); }
+       to { opacity: 1; transform: translateY(0); }
+     }
+     /* Reaction Buttons */
+ .reaction-buttons {
+   display: flex;
+   gap: 10px;
+   margin-top: 10px;
+ }
+ .reaction-buttons button {
+   background: transparent;
+   border: none;
+   font-size: 1.2rem;
+   cursor: pointer;
+   transition: transform 0.2s ease;
+ }
+ .reaction-buttons button:hover {
+   transform: scale(1.2);
+ }
+ 
+ /* Edit Button */
+ .edit-button {
+   background-color: #f0f0f0;
+   border: none;
+   border-radius: 8px;
+   padding: 5px 10px;
+   cursor: pointer;
+   font-size: 0.9rem;
+   margin-top: 10px;
+ }
+ 
+ /* Modal Style */
+ .modal {
+   display: none;
+   position: fixed;
+   z-index: 1000;
+   left: 0; top: 0;
+   width: 100%; height: 100%;
+   background: rgba(0,0,0,0.5);
+   justify-content: center;
+   align-items: center;
+ }
+ .modal-content {
+   background: white;
+   padding: 20px;
+   border-radius: 15px;
+   width: 90%;
+   max-width: 500px;
+   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+ }
+ .modal textarea {
+   width: 100%;
+   height: 150px;
+   border-radius: 10px;
+   padding: 10px;
+   resize: vertical;
+   font-size: 1rem;
+ }
+ .modal-buttons {
+   text-align: right;
+   margin-top: 10px;
+ }
+ .modal-buttons button {
+   margin-left: 10px;
+   padding: 8px 14px;
+   font-size: 0.9rem;
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+ }
+ .save-btn {
+   background-color: #4CAF50;
+   color: white;
+ }
+ .cancel-btn {
+   background-color: #f44336;
+   color: white;
+ }
+   </style>
+ </head>
+ <body>
+ 
+ <header>
+   <div class="logo">
+     <img src="assets/bryan.jpg" alt="Profile">
+     <span>Bryan Gutierrez Ablao</span>
+   </div>
+   <div class="hamburger" onclick="toggleMenu()">☰</div>
+   <nav id="nav">
+     <a href="index.html">Profile</a>
+     <a href="about.html">About Me</a>
+     <a href="life.html">Life Update</a>
+     <a href="contact.html">Contact Me</a>
+   </nav>
+ </header>
+ 
+ <div class="layout">
+   <aside class="sidebar">
+     <h3>Categories</h3>
+     <ul class="category-list">
+       <li data-category="home" class="active" onclick="renderPosts('home')">🏠 Home</li>
+       <li data-category="gallery" onclick="renderPosts('gallery')">🖼️ Gallery</li>
+       <li data-category="videos" onclick="renderPosts('videos')">🎬 Videos</li>
+       <li data-category="favorite" onclick="renderPosts('favorite')">⭐ Favorite</li>
+     </ul>
+   </aside>
+ 
+   <div class="container">
+     <div class="section-title">Life Update</div>
+     <p id="category-message">Welcome to my life update section! Here you can share new events, milestones, or stories.</p>
+ 
+     <div class="create-post" id="create-post-section">
+       <h3>Create a New Post</h3>
+       <input type="text" id="title" placeholder="Post Title">
+       <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
+       <input type="file" id="file-upload" multiple accept="image/*,video/*">
+       <button onclick="createPost()">Post</button>
+     </div>
+ 
+     <div id="posts-container"></div>
+   </div>
+ </div>
+ 
+ <script>
+   let currentCategory = 'home';
+ 
+   function toggleMenu() {
+     document.getElementById('nav').classList.toggle('active');
+   }
+ 
+   function createPost() {
+     const title = document.getElementById('title').value;
+     const content = document.getElementById('content').value;
+     const fileInput = document.getElementById('file-upload');
+     const files = fileInput.files;
+ 
+     if (!title || !content) return alert('Please fill in all fields.');
+ 
+     const readers = [];
+     for (let i = 0; i < files.length; i++) {
+       readers.push(new Promise((resolve, reject) => {
+         const reader = new FileReader();
+         reader.onload = () => resolve({ name: files[i].name, type: files[i].type, data: reader.result });
+         reader.onerror = reject;
+         reader.readAsDataURL(files[i]);
+       }));
+     }
+ 
+     Promise.all(readers).then(media => {
+       const post = {
+         id: Date.now(),
+         title,
+         content,
+         favorite: false,
+         media,
+         category: currentCategory,
+         datePosted: new Date().toLocaleString(),
+         reactions: { like: 0, love: 0 },
+         comments: []
+       };
+ 
+       const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+       posts.unshift(post);
+       localStorage.setItem('lifePosts', JSON.stringify(posts));
+ 
+       document.getElementById('title').value = '';
+       document.getElementById('content').value = '';
+       fileInput.value = '';
+       renderPosts(currentCategory);
+     });
+   }
+ 
+   function deletePost(id) {
+     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+     posts = posts.filter(p => p.id !== id);
+     localStorage.setItem('lifePosts', JSON.stringify(posts));
+     renderPosts(currentCategory);
+   }
+ 
+   function editPost(id) {
+     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+     const index = posts.findIndex(p => p.id === id);
+     if (index === -1) return;
+ 
+     const modal = document.getElementById('editModal');
+     const textarea = document.getElementById('editText');
+     textarea.value = posts[index].content;
+     modal.style.display = 'flex';
+ 
+     document.getElementById('saveEdit').onclick = () => {
+       posts[index].content = textarea.value;
+       localStorage.setItem('lifePosts', JSON.stringify(posts));
+       renderPosts(currentCategory);
+       modal.style.display = 'none';
+     };
+ 
+     document.getElementById('cancelEdit').onclick = () => {
+       modal.style.display = 'none';
+     };
+ 
+     // Optional: Close modal when clicking outside
+     window.onclick = function(event) {
+       if (event.target == modal) {
+         modal.style.display = 'none';
+       }
+     };
+   }
+ 
   function toggleFavorite(id) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const post = posts.find(p => p.id === id);
-    if (post) {
-      post.favorite = !post.favorite;
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-      renderPosts(currentCategory);
-    }
-  }
-
-  function likePost(id) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const post = posts.find(p => p.id === id);
-    if (post) {
-      post.reactions.like += 1;
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-      renderPosts(currentCategory);
-    }
-  }
-
-  function lovePost(id) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const post = posts.find(p => p.id === id);
-    if (post) {
-      post.reactions.love += 1;
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-      renderPosts(currentCategory);
-    }
-  }
-
-  function toggleReaction(id, type) {
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const index = posts.findIndex(p => p.id === id);
-    if (index !== -1) {
-      posts[index].reactions[type]++;
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-      renderPosts(currentCategory);
-    }
-  }
-
-  function addComment(id) {
-    const commentInput = document.getElementById(`comment-input-${id}`);
-    const commentText = commentInput.value;
-    if (!commentText) return;
-
-    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const index = posts.findIndex(p => p.id === id);
-    if (index !== -1) {
-      posts[index].comments.push({
-        user: 'Current User',
-        comment: commentText,
-        date: new Date().toLocaleString()
-      });
-      localStorage.setItem('lifePosts', JSON.stringify(posts));
-      commentInput.value = '';
-      renderPosts(currentCategory);
-    }
-  }
-
-  function renderPosts(category) {
-    currentCategory = category;
-
-    document.querySelectorAll('.category-list li').forEach(li => {
-      li.classList.toggle('active', li.dataset.category === category);
-    });
-
-    const container = document.getElementById('posts-container');
-    container.innerHTML = '';
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-
-    const filtered = posts.filter(p => category === 'favorite' ? p.favorite : p.category === category);
-
-    if (filtered.length === 0) {
-      container.innerHTML = '<p style="margin-top:20px;">No posts yet in this category.</p>';
-      return;
-    }
-
-    filtered.forEach(post => {
-      const div = document.createElement('div');
-      div.className = 'post';
-
-      const title = document.createElement('div');
-      title.className = 'post-title';
-      title.textContent = post.title;
-
-      const content = document.createElement('div');
-      content.className = 'post-content';
-      content.textContent = post.content;
-
-      const datePosted = document.createElement('div');
-      datePosted.className = 'post-date';
-      datePosted.textContent = `Posted on ${post.datePosted}`;
-
-      const reactions = document.createElement('div');
-      reactions.className = 'post-reactions';
-      const likeBtn = document.createElement('button');
-      likeBtn.textContent = `👍 Like (${post.reactions.like})`;
-      likeBtn.onclick = () => toggleReaction(post.id, 'like');
-      const loveBtn = document.createElement('button');
-      loveBtn.textContent = `❤️ Love (${post.reactions.love})`;
-      loveBtn.onclick = () => toggleReaction(post.id, 'love');
-      reactions.append(likeBtn, loveBtn);
-
-      const commentsSection = document.createElement('div');
-      commentsSection.className = 'post-comments';
-      post.comments.forEach(comment => {
-        const commentDiv = document.createElement('div');
-        commentDiv.className = 'comment';
-        commentDiv.innerHTML = `<strong>${comment.user}:</strong> ${comment.comment} <br><small>${comment.date}</small>`;
-        commentsSection.appendChild(commentDiv);
-      });
-
-      const commentInput = document.createElement('textarea');
-      commentInput.id = `comment-input-${post.id}`;
-      commentInput.placeholder = 'Add a comment...';
-      const commentBtn = document.createElement('button');
-      commentBtn.textContent = 'Post Comment';
-      commentBtn.onclick = () => addComment(post.id);
-      commentsSection.append(commentInput, commentBtn);
-
-      const actions = document.createElement('div');
-      actions.className = 'post-actions';
-
-      const editBtn = document.createElement('button');
-      editBtn.textContent = '✒️Edit';
-      editBtn.onclick = () => editPost(post.id);
-
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = '🔥Delete';
-      deleteBtn.onclick = () => deletePost(post.id);
-
-      const favBtn = document.createElement('button');
-      favBtn.textContent = post.favorite ? '💔Unfavorite' : '⭐Favorite';
-      favBtn.onclick = () => toggleFavorite(post.id);
-
-      actions.append(editBtn, deleteBtn, favBtn);
-
-      const mediaContainer = document.createElement('div');
-      const carouselContainer = document.createElement('div');
-      carouselContainer.className = 'carousel-container';
-
-      post.media.forEach(file => {
-        if (file.type.startsWith('image/')) {
-          const img = document.createElement('img');
-          img.src = file.data;
-          img.style.maxWidth = '100%';
-          img.style.marginTop = '10px';
-          carouselContainer.appendChild(img);
-        }
-      });
-
-      if (carouselContainer.childNodes.length > 1) {
-        const prevBtn = document.createElement('button');
-        prevBtn.textContent = '◀️';
-        const nextBtn = document.createElement('button');
-        nextBtn.textContent = '▶️';
-        mediaContainer.append(prevBtn, carouselContainer, nextBtn);
-        let currentIndex = 0;
-        const updateCarousel = () => {
-          carouselContainer.childNodes.forEach((img, index) => {
-            img.style.display = index === currentIndex ? 'block' : 'none';
-          });
-        };
-        prevBtn.onclick = () => {
-          currentIndex = (currentIndex === 0) ? carouselContainer.childNodes.length - 1 : currentIndex - 1;
-          updateCarousel();
-        };
-        nextBtn.onclick = () => {
-          currentIndex = (currentIndex === carouselContainer.childNodes.length - 1) ? 0 : currentIndex + 1;
-          updateCarousel();
-        };
-        updateCarousel();
-      } else {
-        mediaContainer.appendChild(carouselContainer);
-      }
-
-      div.append(title, content, datePosted, reactions, mediaContainer, commentsSection, actions);
-      container.appendChild(div);
-    });
-  }
-  <!-- Post Creation Section -->
-<div class="create-post">
-  <input type="text" id="post-title" placeholder="Post Title">
-  <textarea id="post-content" placeholder="Write your post..."></textarea>
-  
-  document.getElementById('file-upload').addEventListener('change', function(event) {
-  const previewContainer = document.getElementById('preview-container');
-  previewContainer.innerHTML = ''; // Clear previous previews
-
-  const files = event.target.files;
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-      const preview = document.createElement('div');
-      preview.classList.add('preview-item');
-      
-      if (file.type.startsWith('image')) {
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.alt = file.name;
-        preview.appendChild(img);
-      } else if (file.type.startsWith('video')) {
-        const video = document.createElement('video');
-        video.src = e.target.result;
-        video.controls = true;
-        preview.appendChild(video);
-      }
-
-      previewContainer.appendChild(preview);
-    };
-
-    reader.readAsDataURL(file);
-  }
-});
-</body>
-</html>
+   let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+   const post = posts.find(p => p.id === id);
+   if (post) {
+     post.favorite = !post.favorite;
+     localStorage.setItem('lifePosts', JSON.stringify(posts));
+     renderPosts(currentCategory);
+   }
+ }
+ 
+ function renderPosts(category) {
+   currentCategory = category;
+   const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+   const filteredPosts = posts.filter(post => post.category === category);
+ 
+   const postsContainer = document.getElementById('posts-container');
+   postsContainer.innerHTML = '';
+ 
+   filteredPosts.forEach(post => {
+     const postElement = document.createElement('div');
+     postElement.classList.add('post');
+     postElement.innerHTML = `
+       <div class="post-title">${post.title}</div>
+       <div class="post-content">${post.content}</div>
+       <div class="post-actions">
+         <button onclick="editPost(${post.id})">✒️Edit</button>
+         <button onclick="deletePost(${post.id})">🔥Delete</button>
+         <button onclick="toggleFavorite(${post.id})">${post.favorite ? '💔Unfavorite' : '⭐Favorite'}</button>
+       </div>
+       <div class="reaction-buttons">
+         <button onclick="likePost(${post.id})">👍 ${post.reactions.like}</button>
+         <button onclick="lovePost(${post.id})">❤️ ${post.reactions.love}</button>
+       </div>
+       <div class="media">
+         ${post.media.map(file => `<img src="${file.data}" alt="${file.name}" width="100" />`).join('')}
+       </div>
+     `;
+     postsContainer.appendChild(postElement);
+   });
+ }
+ 
+ function likePost(id) {
+   let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+   const post = posts.find(p => p.id === id);
+   if (post) {
+     post.reactions.like += 1;
+     localStorage.setItem('lifePosts', JSON.stringify(posts));
+     renderPosts(currentCategory);
+   }
+ }
+ 
+ function lovePost(id) {
+   let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+   const post = posts.find(p => p.id === id);
+   if (post) {
+     post.reactions.love += 1;
+     localStorage.setItem('lifePosts', JSON.stringify(posts));
+     renderPosts(currentCategory);
+   }
+ }
+ 
+ document.addEventListener('DOMContentLoaded', function() {
+   renderPosts(currentCategory);
+ });
+ 
+ 
+ 
+   function toggleReaction(id, type) {
+     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+     const index = posts.findIndex(p => p.id === id);
+     if (index !== -1) {
+       posts[index].reactions[type]++;
+       localStorage.setItem('lifePosts', JSON.stringify(posts));
+       renderPosts(currentCategory);
+     }
+   }
+ 
+   function addComment(id) {
+     const commentInput = document.getElementById(`comment-input-${id}`);
+     const commentText = commentInput.value;
+     if (!commentText) return;
+ 
+     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+     const index = posts.findIndex(p => p.id === id);
+     if (index !== -1) {
+       posts[index].comments.push({
+         user: 'Current User',
+         comment: commentText,
+         date: new Date().toLocaleString()
+       });
+       localStorage.setItem('lifePosts', JSON.stringify(posts));
+       commentInput.value = '';
+       renderPosts(currentCategory);
+     }
+   }
+ 
+   function renderPosts(category) {
+     currentCategory = category;
+ 
+     document.querySelectorAll('.category-list li').forEach(li => {
+       li.classList.toggle('active', li.dataset.category === category);
+     });
+ 
+     const container = document.getElementById('posts-container');
+     container.innerHTML = '';
+     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+ 
+     const filtered = posts.filter(p => category === 'favorite' ? p.favorite : p.category === category);
+ 
+     if (filtered.length === 0) {
+       container.innerHTML = '<p style="margin-top:20px;">No posts yet in this category.</p>';
+       return;
+     }
+ 
+     filtered.forEach(post => {
+       const div = document.createElement('div');
+       div.className = 'post';
+ 
+       const title = document.createElement('div');
+       title.className = 'post-title';
+       title.textContent = post.title;
+ 
+       const content = document.createElement('div');
+       content.className = 'post-content';
+       content.textContent = post.content;
+ 
+       const datePosted = document.createElement('div');
+       datePosted.className = 'post-date';
+       datePosted.textContent = `Posted on ${post.datePosted}`;
+ 
+       const reactions = document.createElement('div');
+       reactions.className = 'post-reactions';
+       const likeBtn = document.createElement('button');
+       likeBtn.textContent = `👍 Like (${post.reactions.like})`;
+       likeBtn.onclick = () => toggleReaction(post.id, 'like');
+       const loveBtn = document.createElement('button');
+       loveBtn.textContent = `❤️ Love (${post.reactions.love})`;
+       loveBtn.onclick = () => toggleReaction(post.id, 'love');
+       reactions.append(likeBtn, loveBtn);
+ 
+       const commentsSection = document.createElement('div');
+       commentsSection.className = 'post-comments';
+       post.comments.forEach(comment => {
+         const commentDiv = document.createElement('div');
+         commentDiv.className = 'comment';
+         commentDiv.innerHTML = `<strong>${comment.user}:</strong> ${comment.comment} <br><small>${comment.date}</small>`;
+         commentsSection.appendChild(commentDiv);
+       });
+ 
+       const commentInput = document.createElement('textarea');
+       commentInput.id = `comment-input-${post.id}`;
+       commentInput.placeholder = 'Add a comment...';
+       const commentBtn = document.createElement('button');
+       commentBtn.textContent = 'Post Comment';
+       commentBtn.onclick = () => addComment(post.id);
+       commentsSection.append(commentInput, commentBtn);
+ 
+       const actions = document.createElement('div');
+       actions.className = 'post-actions';
+ 
+       const editBtn = document.createElement('button');
+       editBtn.textContent = '✒️Edit';
+       editBtn.onclick = () => editPost(post.id);
+ 
+       const deleteBtn = document.createElement('button');
+       deleteBtn.textContent = '🔥Delete';
+       deleteBtn.onclick = () => deletePost(post.id);
+ 
+       const favBtn = document.createElement('button');
+       favBtn.textContent = post.favorite ? '💔Unfavorite' : '⭐Favorite';
+       favBtn.onclick = () => toggleFavorite(post.id);
+ 
+       actions.append(editBtn, deleteBtn, favBtn);
+ 
+       const mediaContainer = document.createElement('div');
+       const carouselContainer = document.createElement('div');
+       carouselContainer.className = 'carousel-container';
+ 
+       post.media.forEach(file => {
+         if (file.type.startsWith('image/')) {
+           const img = document.createElement('img');
+           img.src = file.data;
+           img.style.maxWidth = '100%';
+           img.style.marginTop = '10px';
+           carouselContainer.appendChild(img);
+         }
+       });
+ 
+       if (carouselContainer.childNodes.length > 1) {
+         const prevBtn = document.createElement('button');
+         prevBtn.textContent = '◀️';
+         const nextBtn = document.createElement('button');
+         nextBtn.textContent = '▶️';
+         mediaContainer.append(prevBtn, carouselContainer, nextBtn);
+         let currentIndex = 0;
+         const updateCarousel = () => {
+           carouselContainer.childNodes.forEach((img, index) => {
+             img.style.display = index === currentIndex ? 'block' : 'none';
+           });
+         };
+         prevBtn.onclick = () => {
+           currentIndex = (currentIndex === 0) ? carouselContainer.childNodes.length - 1 : currentIndex - 1;
+           updateCarousel();
+         };
+         nextBtn.onclick = () => {
+           currentIndex = (currentIndex === carouselContainer.childNodes.length - 1) ? 0 : currentIndex + 1;
+           updateCarousel();
+         };
+         updateCarousel();
+       } else {
+         mediaContainer.appendChild(carouselContainer);
+       }
+ 
+       div.append(title, content, datePosted, reactions, mediaContainer, commentsSection, actions);
+       container.appendChild(div);
+     });
+   }
+ 
+   window.onload = () => {
+     renderPosts('home');
+   };
+ </script>
+ <div id="editModal" class="modal">
+   <div class="modal-content">
+     <textarea id="editText"></textarea>
+     <div class="modal-buttons">
+       <button id="saveEdit" class="save-btn">Save</button>
+       <button id="cancelEdit" class="cancel-btn">Cancel</button>
+     </div>
+   </div>
+ </div>
+ </body>
+ </html>
