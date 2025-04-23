@@ -498,9 +498,9 @@ function renderPosts(category) {
       <div class="post-title">${post.title}</div>
       <div class="post-content">${post.content}</div>
       <div class="post-actions">
-        <button onclick="editPost(${post.id})">Edit</button>
-        <button onclick="deletePost(${post.id})">Delete</button>
-        <button onclick="toggleFavorite(${post.id})">${post.favorite ? 'Unfavorite' : 'Favorite'}</button>
+        <button onclick="editPost(${post.id})">📝Edit</button>
+        <button onclick="deletePost(${post.id})">❎Delete</button>
+        <button onclick="toggleFavorite(${post.id})">${post.favorite ? '⭐Unfavorite' : '🌟Favorite'}</button>
       </div>
       <div class="reaction-buttons">
         <button onclick="likePost(${post.id})">👍 ${post.reactions.like}</button>
