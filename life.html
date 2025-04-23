@@ -314,6 +314,8 @@
 </div>
 
 <script>
+  let currentCategory = 'home';
+
   function toggleMenu() {
     document.getElementById('nav').classList.toggle('active');
   }
@@ -342,7 +344,8 @@
         title,
         content,
         favorite: false,
-        media
+        media,
+        category: currentCategory
       };
 
       const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
@@ -364,83 +367,109 @@
   }
 
   function editPost(id) {
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const post = posts.find(p => p.id === id);
-    const newTitle = prompt('Edit title:', post.title);
-    const newContent = prompt('Edit content:', post.content);
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const index = posts.findIndex(p => p.id === id);
+    if (index === -1) return;
+
+    const newTitle = prompt('Edit title:', posts[index].title);
+    const newContent = prompt('Edit content:', posts[index].content);
+
     if (newTitle && newContent) {
-      post.title = newTitle;
-      post.content = newContent;
+      posts[index].title = newTitle;
+      posts[index].content = newContent;
       localStorage.setItem('lifePosts', JSON.stringify(posts));
       renderPosts(currentCategory);
     }
   }
 
-  function favoritePost(id) {
-    const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-    const post = posts.find(p => p.id === id);
-    post.favorite = !post.favorite;
-    localStorage.setItem('lifePosts', JSON.stringify(posts));
-    renderPosts(currentCategory);
+  function toggleFavorite(id) {
+    let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
+    const index = posts.findIndex(p => p.id === id);
+    if (index !== -1) {
+      posts[index].favorite = !posts[index].favorite;
+      localStorage.setItem('lifePosts', JSON.stringify(posts));
+      renderPosts(currentCategory);
+    }
   }
-
-  let currentCategory = 'home';
 
   function renderPosts(category) {
     currentCategory = category;
+
+    // Update active class in sidebar
+    document.querySelectorAll('.category-list li').forEach(li => {
+      li.classList.toggle('active', li.dataset.category === category);
+    });
+
     const container = document.getElementById('posts-container');
-    const createSection = document.getElementById('create-post-section');
-    const message = document.getElementById('category-message');
+    container.innerHTML = '';
     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
 
-    document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
-    document.querySelector(`[data-category="${category}"]`).classList.add('active');
+    const filtered = posts.filter(p => {
+      if (category === 'favorite') return p.favorite;
+      return p.category === category;
+    });
 
-    let filtered = posts;
-
-    if (category === 'gallery') {
-      filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('image/')));
-      createSection.style.display = 'none';
-      message.textContent = "Explore the gallery where art, inspiration, and personal experiences blend into a unique visual story.";
-    } else if (category === 'videos') {
-      filtered = posts.filter(p => p.media?.some(m => m.type.startsWith('video/')));
-      createSection.style.display = 'none';
-      message.textContent = "Take a look at the videos visuals that tell stories, from everyday moments to meaningful experiences.";
-    } else if (category === 'favorite') {
-      filtered = posts.filter(p => p.favorite);
-      createSection.style.display = 'none';
-      message.textContent = "A glimpse into the things I love and enjoy most.";
-    } else {
-      createSection.style.display = 'block';
-      message.textContent = "Welcome to my life update section! Here you can share new events, milestones, or stories.";
+    if (filtered.length === 0) {
+      container.innerHTML = '<p style="margin-top:20px;">No posts yet in this category.</p>';
+      return;
     }
 
-    container.innerHTML = filtered.map(p => `
-      <div class="post">
-        <div class="post-title">${p.title}</div>
-        <div class="post-content">${p.content}</div>
-        ${p.media?.map(file => {
-          if (file.type.startsWith('image/')) {
-            return `<img src="${file.data}" alt="${file.name}" style="max-width:100%;margin-top:10px;border-radius:8px;">`;
-          } else if (file.type.startsWith('video/')) {
-            return `<video controls style="max-width:100%;margin-top:10px;border-radius:8px;">
-                      <source src="${file.data}" type="${file.type}">
-                      Your browser does not support the video tag.
-                    </video>`;
-          }
-          return '';
-        }).join('') || ''}
-        <div class="post-actions">
-          <button onclick="editPost(${p.id})">📝 Edit</button>
-          <button onclick="deletePost(${p.id})">🗑️ Delete</button>
-          <button onclick="favoritePost(${p.id})">${p.favorite ? '💔 Unfavorite' : '❤️ Favorite'}</button>
-        </div>
-      </div>
-    `).join('');
+    filtered.forEach(post => {
+      const div = document.createElement('div');
+      div.className = 'post';
+
+      const title = document.createElement('div');
+      title.className = 'post-title';
+      title.textContent = post.title;
+
+      const content = document.createElement('div');
+      content.className = 'post-content';
+      content.textContent = post.content;
+
+      const actions = document.createElement('div');
+      actions.className = 'post-actions';
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit';
+      editBtn.onclick = () => editPost(post.id);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.onclick = () => deletePost(post.id);
+
+      const favBtn = document.createElement('button');
+      favBtn.textContent = post.favorite ? 'Unfavorite' : 'Favorite';
+      favBtn.onclick = () => toggleFavorite(post.id);
+
+      actions.append(editBtn, deleteBtn, favBtn);
+
+      // Media preview
+      const mediaContainer = document.createElement('div');
+      post.media.forEach(file => {
+        if (file.type.startsWith('image/')) {
+          const img = document.createElement('img');
+          img.src = file.data;
+          img.style.maxWidth = '100%';
+          img.style.marginTop = '10px';
+          mediaContainer.appendChild(img);
+        } else if (file.type.startsWith('video/')) {
+          const video = document.createElement('video');
+          video.src = file.data;
+          video.controls = true;
+          video.style.maxWidth = '100%';
+          video.style.marginTop = '10px';
+          mediaContainer.appendChild(video);
+        }
+      });
+
+      div.append(title, content, mediaContainer, actions);
+      container.appendChild(div);
+    });
   }
 
-  // Initial render
-  renderPosts(currentCategory);
+  window.onload = () => {
+    renderPosts('home');
+  };
 </script>
 
 </body>
