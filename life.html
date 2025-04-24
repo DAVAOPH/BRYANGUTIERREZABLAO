@@ -1,709 +1,332 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-   <title>Life Update - Bryan Gutierrez Ablao</title>
-   <link rel="icon" type="image/jpg" href="assets/profile.jpg" />
-   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-   <style>
-     * {
-       margin: 0;
-       padding: 0;
-       box-sizing: border-box;
-     }
- 
-     html {
-       font-size: 16px;
-     }
- 
-     body {
-       font-family: 'Poppins', sans-serif;f
-       font-family: 'Poppins', sans-serif;
-       background: linear-gradient(135deg, #e6ecff, #ffffff);
-       color: #333;
-       scroll-behavior: smooth;
-     }
- 
-     header {
-       background: #1d2b53;
-       color: white;
-       padding: 15px 25px;
-       display: flex;
-       justify-content: space-between;
-       align-items: center;
-       position: sticky;
-       top: 0;
-       z-index: 1000;
-       flex-wrap: wrap;
-     }
- 
-     .logo {
-       display: flex;
-       align-items: center;
-       gap: 10px;
-     }
- 
-     .logo img {
-       width: 40px;
-       height: 40px;
-       border-radius: 8px;
-     }
- 
-     .logo span {
-       font-size: 1.2rem;
-       font-weight: bold;
-     }
- 
-     .hamburger {
-       font-size: 1.8rem;
-       cursor: pointer;
-       display: none;
-     }
- 
-     nav {
-       display: flex;
-       gap: 20px;
-     }
- 
-     nav a {
-       color: white;
-       text-decoration: none;
-       font-size: 1rem;
-       position: relative;
-     }
- 
-     nav a::after {
-       content: "";
-       position: absolute;
-       width: 0;
-       height: 2px;
-       left: 0;
-       bottom: -4px;
-       background: white;
-       transition: width 0.3s;
-     }
- 
-     nav a:hover::after {
-       width: 100%;
-     }
- 
-     @media (max-width: 768px) {
-       .hamburger {
-         display: block;
-       }
- 
-       nav {
-         display: none;
-         flex-direction: column;
-         background: #1d2b53;
-         width: 100%;
-         position: absolute;
-         top: 60px;
-         left: 0;
-         padding: 10px 20px;
-       }
- 
-       nav.active {
-         display: flex;
-       }
-     }
- 
-     .layout {
-       display: flex;
-       max-width: 1200px;
-       margin: 40px auto;
-       gap: 20px;
-       padding: 0 20px;
-       flex-wrap: wrap;
-     }
- 
-     .sidebar {
-       width: 100%;
-       max-width: 250px;
-       background: #f4f6ff;
-       border-radius: 10px;
-       padding: 20px;
-       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
-     }
- 
-     .sidebar h3 {
-       font-size: 1.1rem;
-       margin-bottom: 15px;
-       color: #1d2b53;
-     }
- 
-     .category-list {
-       list-style: none;
-       padding: 0;
-     }
- 
-     .category-list li {
-       padding: 10px;
-       margin-bottom: 8px;
-       background: #fff;
-       border: 1px solid #dcdcdc;
-       border-radius: 6px;
-       cursor: pointer;
-       transition: background 0.3s ease;
-     }
- 
-     .category-list li:hover {
-       background: #e6ecff;
-     }
- 
-     .category-list li.active {
-       background: #1d2b53;
-       color: white;
-       font-weight: 600;
-     }
- 
-     .container {
-       flex: 1;
-       min-width: 300px;
-       background: #ffffff;
-       border-radius: 15px;
-       padding: 30px 20px;
-       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-       animation: fadeIn 0.8s ease-in;
-     }
- 
-     .section-title {
-       font-size: 1.4rem;
-       font-weight: 600;
-       color: #1d2b53;
-       margin: 35px 0 15px;
-       border-left: 5px solid #1d2b53;
-       padding-left: 12px;
-       position: relative;
-     }
- 
-     .section-title::after {
-       content: '';
-       position: absolute;
-       left: 12px;
-       bottom: -5px;
-       width: 40px;
-       height: 3px;
-       background: #1d2b53;
-       transition: width 0.3s ease;
-     }
- 
-     .section-title:hover::after {
-       width: 100px;
-     }
- 
-     .create-post {
-       margin-top: 20px;
-       padding: 20px;
-       background: #f9fbff;
-       border: 2px dashed #ccc;
-       border-radius: 10px;
-       text-align: center;
-     }
- 
-     .create-post input,
-     .create-post textarea {
-       width: 100%;
-       padding: 10px;
-       margin-top: 10px;
-       margin-bottom: 15px;
-       border-radius: 6px;
-       border: 1px solid #ddd;
-       font-family: 'Poppins', sans-serif;
-       font-size: 1rem;
-     }
- 
-     .create-post button {
-       padding: 10px 20px;
-       background: #1d2b53;
-       color: white;
-       border: none;
-       border-radius: 6px;
-       cursor: pointer;
-       font-size: 1rem;
-     }
- 
-     .create-post button:hover {
-       background: #162043;
-     }
- 
-     .post {
-       background: #f2f4ff;
-       padding: 15px 20px;
-       margin-top: 20px;
-       border-radius: 10px;
-       position: relative;
-     }
- 
-     .post-title {
-       font-weight: bold;
-       margin-bottom: 8px;
-     }
- 
-     .post-content {
-       margin-bottom: 10px;
-     }
- 
-     .post-actions {
-       display: flex;
-       gap: 10px;
-       flex-wrap: wrap;
-     }
- 
-     .post-actions button {
-       background: #1d2b53;
-       color: white;
-       border: none;
-       padding: 5px 12px;
-       border-radius: 5px;
-       cursor: pointer;
-       font-size: 0.85rem;
-     }
- 
-     .post-actions button:hover {
-       background: #0f1a3a;
-     }
- 
-     @keyframes fadeIn {
-       from { opacity: 0; transform: translateY(20px); }
-       to { opacity: 1; transform: translateY(0); }
-     }
-     /* Reaction Buttons */
- .reaction-buttons {
-   display: flex;
-   gap: 10px;
-   margin-top: 10px;
- }
- .reaction-buttons button {
-   background: transparent;
-   border: none;
-   font-size: 1.2rem;
-   cursor: pointer;
-   transition: transform 0.2s ease;
- }
- .reaction-buttons button:hover {
-   transform: scale(1.2);
- }
- 
- /* Edit Button */
- .edit-button {
-   background-color: #f0f0f0;
-   border: none;
-   border-radius: 8px;
-   padding: 5px 10px;
-   cursor: pointer;
-   font-size: 0.9rem;
-   margin-top: 10px;
- }
- 
- /* Modal Style */
- .modal {
-   display: none;
-   position: fixed;
-   z-index: 1000;
-   left: 0; top: 0;
-   width: 100%; height: 100%;
-   background: rgba(0,0,0,0.5);
-   justify-content: center;
-   align-items: center;
- }
- .modal-content {
-   background: white;
-   padding: 20px;
-   border-radius: 15px;
-   width: 90%;
-   max-width: 500px;
-   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
- }
- .modal textarea {
-   width: 100%;
-   height: 150px;
-   border-radius: 10px;
-   padding: 10px;
-   resize: vertical;
-   font-size: 1rem;
- }
- .modal-buttons {
-   text-align: right;
-   margin-top: 10px;
- }
- .modal-buttons button {
-   margin-left: 10px;
-   padding: 8px 14px;
-   font-size: 0.9rem;
-   border: none;
-   border-radius: 8px;
-   cursor: pointer;
- }
- .save-btn {
-   background-color: #4CAF50;
-   color: white;
- }
- .cancel-btn {
-   background-color: #f44336;
-   color: white;
- }
-   </style>
- </head>
- <body>
- 
- <header>
-   <div class="logo">
-     <img src="assets/bryan.jpg" alt="Profile">
-     <span>Bryan Gutierrez Ablao</span>
-   </div>
-   <div class="hamburger" onclick="toggleMenu()">☰</div>
-   <nav id="nav">
-     <a href="index.html">Profile</a>
-     <a href="about.html">About Me</a>
-     <a href="life.html">Life Update</a>
-     <a href="contact.html">Contact Me</a>
-   </nav>
- </header>
- 
- <div class="layout">
-   <aside class="sidebar">
-     <h3>Categories</h3>
-     <ul class="category-list">
-       <li data-category="home" class="active" onclick="renderPosts('home')">🏠 Home</li>
-       <li data-category="gallery" onclick="renderPosts('gallery')">🖼️ Gallery</li>
-       <li data-category="videos" onclick="renderPosts('videos')">🎬 Videos</li>
-       <li data-category="favorite" onclick="renderPosts('favorite')">⭐ Favorite</li>
-     </ul>
-   </aside>
- 
-   <div class="container">
-     <div class="section-title">Life Update</div>
-     <p id="category-message">Welcome to my life update section! Here you can share new events, milestones, or stories.</p>
- 
-     <div class="create-post" id="create-post-section">
-       <h3>Create a New Post</h3>
-       <input type="text" id="title" placeholder="Post Title">
-       <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
-       <input type="file" id="file-upload" multiple accept="image/*,video/*">
-       <button onclick="createPost()">Post</button>
-     </div>
- 
-     <div id="posts-container"></div>
-   </div>
- </div>
- 
- <script>
-   let currentCategory = 'home';
- 
-   function toggleMenu() {
-     document.getElementById('nav').classList.toggle('active');
-   }
- 
-   function createPost() {
-     const title = document.getElementById('title').value;
-     const content = document.getElementById('content').value;
-     const fileInput = document.getElementById('file-upload');
-     const files = fileInput.files;
- 
-     if (!title || !content) return alert('Please fill in all fields.');
- 
-     const readers = [];
-     for (let i = 0; i < files.length; i++) {
-       readers.push(new Promise((resolve, reject) => {
-         const reader = new FileReader();
-         reader.onload = () => resolve({ name: files[i].name, type: files[i].type, data: reader.result });
-         reader.onerror = reject;
-         reader.readAsDataURL(files[i]);
-       }));
-     }
- 
-     Promise.all(readers).then(media => {
-       const post = {
-         id: Date.now(),
-         title,
-         content,
-         favorite: false,
-         media,
-         category: currentCategory,
-         datePosted: new Date().toLocaleString(),
-         reactions: { like: 0, love: 0 },
-         comments: []
-       };
- 
-       const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-       posts.unshift(post);
-       localStorage.setItem('lifePosts', JSON.stringify(posts));
- 
-       document.getElementById('title').value = '';
-       document.getElementById('content').value = '';
-       fileInput.value = '';
-       renderPosts(currentCategory);
-     });
-   }
- 
-   function deletePost(id) {
-     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-     posts = posts.filter(p => p.id !== id);
-     localStorage.setItem('lifePosts', JSON.stringify(posts));
-     renderPosts(currentCategory);
-   }
- 
-   function editPost(id) {
-     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-     const index = posts.findIndex(p => p.id === id);
-     if (index === -1) return;
- 
-     const modal = document.getElementById('editModal');
-     const textarea = document.getElementById('editText');
-     textarea.value = posts[index].content;
-     modal.style.display = 'flex';
- 
-     document.getElementById('saveEdit').onclick = () => {
-       posts[index].content = textarea.value;
-       localStorage.setItem('lifePosts', JSON.stringify(posts));
-       renderPosts(currentCategory);
-       modal.style.display = 'none';
-     };
- 
-     document.getElementById('cancelEdit').onclick = () => {
-       modal.style.display = 'none';
-     };
- 
-     // Optional: Close modal when clicking outside
-     window.onclick = function(event) {
-       if (event.target == modal) {
-         modal.style.display = 'none';
-       }
-     };
-   }
- 
-  function toggleFavorite(id) {
-   let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-   const post = posts.find(p => p.id === id);
-   if (post) {
-     post.favorite = !post.favorite;
-     localStorage.setItem('lifePosts', JSON.stringify(posts));
-     renderPosts(currentCategory);
-   }
- }
- 
- function renderPosts(category) {
-   currentCategory = category;
-   const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-   const filteredPosts = posts.filter(post => post.category === category);
- 
-   const postsContainer = document.getElementById('posts-container');
-   postsContainer.innerHTML = '';
- 
-   filteredPosts.forEach(post => {
-     const postElement = document.createElement('div');
-     postElement.classList.add('post');
-     postElement.innerHTML = `
-       <div class="post-title">${post.title}</div>
-       <div class="post-content">${post.content}</div>
-       <div class="post-actions">
-         <button onclick="editPost(${post.id})">✒️Edit</button>
-         <button onclick="deletePost(${post.id})">🔥Delete</button>
-         <button onclick="toggleFavorite(${post.id})">${post.favorite ? '💔Unfavorite' : '⭐Favorite'}</button>
-       </div>
-       <div class="reaction-buttons">
-         <button onclick="likePost(${post.id})">👍 ${post.reactions.like}</button>
-         <button onclick="lovePost(${post.id})">❤️ ${post.reactions.love}</button>
-       </div>
-       <div class="media">
-         ${post.media.map(file => `<img src="${file.data}" alt="${file.name}" width="100" />`).join('')}
-       </div>
-     `;
-     postsContainer.appendChild(postElement);
-   });
- }
- 
- function likePost(id) {
-   let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-   const post = posts.find(p => p.id === id);
-   if (post) {
-     post.reactions.like += 1;
-     localStorage.setItem('lifePosts', JSON.stringify(posts));
-     renderPosts(currentCategory);
-   }
- }
- 
- function lovePost(id) {
-   let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-   const post = posts.find(p => p.id === id);
-   if (post) {
-     post.reactions.love += 1;
-     localStorage.setItem('lifePosts', JSON.stringify(posts));
-     renderPosts(currentCategory);
-   }
- }
- 
- document.addEventListener('DOMContentLoaded', function() {
-   renderPosts(currentCategory);
- });
- 
- 
- 
-   function toggleReaction(id, type) {
-     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-     const index = posts.findIndex(p => p.id === id);
-     if (index !== -1) {
-       posts[index].reactions[type]++;
-       localStorage.setItem('lifePosts', JSON.stringify(posts));
-       renderPosts(currentCategory);
-     }
-   }
- 
-   function addComment(id) {
-     const commentInput = document.getElementById(`comment-input-${id}`);
-     const commentText = commentInput.value;
-     if (!commentText) return;
- 
-     let posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
-     const index = posts.findIndex(p => p.id === id);
-     if (index !== -1) {
-       posts[index].comments.push({
-         user: 'Current User',
-         comment: commentText,
-         date: new Date().toLocaleString()
-       });
-       localStorage.setItem('lifePosts', JSON.stringify(posts));
-       commentInput.value = '';
-       renderPosts(currentCategory);
-     }
-   }
- 
-   function renderPosts(category) {
-     currentCategory = category;
- 
-     document.querySelectorAll('.category-list li').forEach(li => {
-       li.classList.toggle('active', li.dataset.category === category);
-     });
- 
-     const container = document.getElementById('posts-container');
-     container.innerHTML = '';
-     const posts = JSON.parse(localStorage.getItem('lifePosts') || '[]');
- 
-     const filtered = posts.filter(p => category === 'favorite' ? p.favorite : p.category === category);
- 
-     if (filtered.length === 0) {
-       container.innerHTML = '<p style="margin-top:20px;">No posts yet in this category.</p>';
-       return;
-     }
- 
-     filtered.forEach(post => {
-       const div = document.createElement('div');
-       div.className = 'post';
- 
-       const title = document.createElement('div');
-       title.className = 'post-title';
-       title.textContent = post.title;
- 
-       const content = document.createElement('div');
-       content.className = 'post-content';
-       content.textContent = post.content;
- 
-       const datePosted = document.createElement('div');
-       datePosted.className = 'post-date';
-       datePosted.textContent = `Posted on ${post.datePosted}`;
- 
-       const reactions = document.createElement('div');
-       reactions.className = 'post-reactions';
-       const likeBtn = document.createElement('button');
-       likeBtn.textContent = `👍 Like (${post.reactions.like})`;
-       likeBtn.onclick = () => toggleReaction(post.id, 'like');
-       const loveBtn = document.createElement('button');
-       loveBtn.textContent = `❤️ Love (${post.reactions.love})`;
-       loveBtn.onclick = () => toggleReaction(post.id, 'love');
-       reactions.append(likeBtn, loveBtn);
- 
-       const commentsSection = document.createElement('div');
-       commentsSection.className = 'post-comments';
-       post.comments.forEach(comment => {
-         const commentDiv = document.createElement('div');
-         commentDiv.className = 'comment';
-         commentDiv.innerHTML = `<strong>${comment.user}:</strong> ${comment.comment} <br><small>${comment.date}</small>`;
-         commentsSection.appendChild(commentDiv);
-       });
- 
-       const commentInput = document.createElement('textarea');
-       commentInput.id = `comment-input-${post.id}`;
-       commentInput.placeholder = 'Add a comment...';
-       const commentBtn = document.createElement('button');
-       commentBtn.textContent = 'Post Comment';
-       commentBtn.onclick = () => addComment(post.id);
-       commentsSection.append(commentInput, commentBtn);
- 
-       const actions = document.createElement('div');
-       actions.className = 'post-actions';
- 
-       const editBtn = document.createElement('button');
-       editBtn.textContent = '✒️Edit';
-       editBtn.onclick = () => editPost(post.id);
- 
-       const deleteBtn = document.createElement('button');
-       deleteBtn.textContent = '🔥Delete';
-       deleteBtn.onclick = () => deletePost(post.id);
- 
-       const favBtn = document.createElement('button');
-       favBtn.textContent = post.favorite ? '💔Unfavorite' : '⭐Favorite';
-       favBtn.onclick = () => toggleFavorite(post.id);
- 
-       actions.append(editBtn, deleteBtn, favBtn);
- 
-       const mediaContainer = document.createElement('div');
-       const carouselContainer = document.createElement('div');
-       carouselContainer.className = 'carousel-container';
- 
-       post.media.forEach(file => {
-         if (file.type.startsWith('image/')) {
-           const img = document.createElement('img');
-           img.src = file.data;
-           img.style.maxWidth = '100%';
-           img.style.marginTop = '10px';
-           carouselContainer.appendChild(img);
-         }
-       });
- 
-       if (carouselContainer.childNodes.length > 1) {
-         const prevBtn = document.createElement('button');
-         prevBtn.textContent = '◀️';
-         const nextBtn = document.createElement('button');
-         nextBtn.textContent = '▶️';
-         mediaContainer.append(prevBtn, carouselContainer, nextBtn);
-         let currentIndex = 0;
-         const updateCarousel = () => {
-           carouselContainer.childNodes.forEach((img, index) => {
-             img.style.display = index === currentIndex ? 'block' : 'none';
-           });
-         };
-         prevBtn.onclick = () => {
-           currentIndex = (currentIndex === 0) ? carouselContainer.childNodes.length - 1 : currentIndex - 1;
-           updateCarousel();
-         };
-         nextBtn.onclick = () => {
-           currentIndex = (currentIndex === carouselContainer.childNodes.length - 1) ? 0 : currentIndex + 1;
-           updateCarousel();
-         };
-         updateCarousel();
-       } else {
-         mediaContainer.appendChild(carouselContainer);
-       }
- 
-       div.append(title, content, datePosted, reactions, mediaContainer, commentsSection, actions);
-       container.appendChild(div);
-     });
-   }
- 
-   window.onload = () => {
-     renderPosts('home');
-   };
- </script>
- <div id="editModal" class="modal">
-   <div class="modal-content">
-     <textarea id="editText"></textarea>
-     <div class="modal-buttons">
-       <button id="saveEdit" class="save-btn">Save</button>
-       <button id="cancelEdit" class="cancel-btn">Cancel</button>
-     </div>
-   </div>
- </div>
- </body>
- </html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Sharing Platform</title>
+    <!-- Firebase Config -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "your-api-key",
+            authDomain: "your-auth-domain",
+            projectId: "your-project-id",
+            storageBucket: "your-storage-bucket",
+            messagingSenderId: "your-messaging-sender-id",
+            appId: "your-app-id",
+            measurementId: "your-measurement-id"
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const firestore = firebase.firestore();
+        const storage = firebase.storage();
+    </script>
+
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        .tab:hover {
+            background-color: #ccc;
+        }
+
+        .post-section, .photo-section, .video-section {
+            display: none;
+        }
+
+        /* Add your specific styles for video and image sections here */
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .upload-form input, .upload-form button {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .comment-section, .reaction-section, .tagging-section {
+            margin-top: 20px;
+        }
+
+        .comment-box {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .comment {
+            padding: 8px;
+            margin-top: 5px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .reaction-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .reaction-button {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .tagging-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tagging-button {
+            cursor: pointer;
+            padding: 8px 15px;
+            background-color: #5b9bd5;
+            color: white;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        /* More styling can be added as per your requirement */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Content Sharing Platform</h1>
+        <div class="category-tabs">
+            <div class="tab" id="post-tab">POST</div>
+            <div class="tab" id="photo-tab">PHOTO</div>
+            <div class="tab" id="video-tab">VIDEO</div>
+        </div>
+
+        <!-- POST Section -->
+        <div class="post-section" id="post-section">
+            <h2>Post a New Content</h2>
+            <form id="post-form" class="upload-form">
+                <input type="text" id="post-title" placeholder="Enter Post Title">
+                <textarea id="post-description" placeholder="Enter Post Description"></textarea>
+                <input type="text" id="post-tags" placeholder="Enter Tags (comma separated)">
+                <button type="submit">Submit Post</button>
+            </form>
+
+            <div id="post-comments"></div>
+            <div class="comment-section">
+                <h3>Comments</h3>
+                <input type="text" id="comment-input" placeholder="Add a comment..." class="comment-box">
+                <button id="add-comment">Add Comment</button>
+                <div id="comments-list"></div>
+            </div>
+
+            <div class="reaction-section">
+                <h3>Reactions</h3>
+                <div class="reaction-buttons">
+                    <span class="reaction-button" id="like-btn">❤️ Like</span>
+                    <span class="reaction-button" id="love-btn">😍 Love</span>
+                    <span class="reaction-button" id="wow-btn">😲 Wow</span>
+                </div>
+            </div>
+            <div class="tagging-section">
+                <h3>Tagging</h3>
+                <button class="tagging-button" id="tag-1">#Inspiration</button>
+                <button class="tagging-button" id="tag-2">#Motivation</button>
+                <button class="tagging-button" id="tag-3">#Lifestyle</button>
+            </div>
+        </div>
+
+        <!-- PHOTO Section -->
+        <div class="photo-section" id="photo-section">
+            <h2>Upload Photos</h2>
+            <form id="photo-upload-form" class="upload-form">
+                <input type="file" id="photo-upload" accept="image/*">
+                <input type="text" id="photo-title" placeholder="Enter Photo Title">
+                <textarea id="photo-description" placeholder="Enter Photo Description"></textarea>
+                <button type="submit">Upload Photo</button>
+            </form>
+        </div>
+
+        <!-- VIDEO Section -->
+        <div class="video-section" id="video-section">
+            <h2>Upload Videos</h2>
+            <form id="video-upload-form" class="upload-form">
+                <input type="file" id="video-upload" accept="video/*">
+                <input type="text" id="video-title" placeholder="Enter Video Title">
+                <textarea id="video-description" placeholder="Enter Video Description"></textarea>
+                <button type="submit">Upload Video</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Switch between POST, PHOTO, and VIDEO tabs
+        document.getElementById('post-tab').addEventListener('click', function() {
+            document.getElementById('post-section').style.display = 'block';
+            document.getElementById('photo-section').style.display = 'none';
+            document.getElementById('video-section').style.display = 'none';
+        });
+        document.getElementById('photo-tab').addEventListener('click', function() {
+            document.getElementById('post-section').style.display = 'none';
+            document.getElementById('photo-section').style.display = 'block';
+            document.getElementById('video-section').style.display = 'none';
+        });
+        document.getElementById('video-tab').addEventListener('click', function() {
+            document.getElementById('post-section').style.display = 'none';
+            document.getElementById('photo-section').style.display = 'none';
+            document.getElementById('video-section').style.display = 'block';
+        });
+
+        // Handle POST upload
+        document.getElementById('post-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const title = document.getElementById('post-title').value;
+            const description = document.getElementById('post-description').value;
+            const tags = document.getElementById('post-tags').value.split(',').map(tag => tag.trim());
+
+            // Save to Firebase Firestore (Posts collection)
+            firestore.collection('posts').add({
+                title: title,
+                description: description,
+                tags: tags,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                alert("Post submitted successfully!");
+            }).catch(err => {
+                console.error("Error adding post: ", err);
+            });
+        });
+
+        // Handle Photo upload
+        document.getElementById('photo-upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const file = document.getElementById('photo-upload').files[0];
+            const title = document.getElementById('photo-title').value;
+            const description = document.getElementById('photo-description').value;
+
+            // Upload image to Firebase Storage
+            const storageRef = storage.ref('photos/' + file.name);
+            storageRef.put(file).then(() => {
+                alert("Photo uploaded successfully!");
+                // You can save metadata or file URL to Firestore
+            }).catch(err => {
+                console.error("Error uploading photo: ", err);
+            });
+        });
+
+        // Handle Video upload
+        document.getElementById('video-upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const file = document.getElementById('video-upload').files[0];
+            const title = document.getElementById('video-title').value;
+            const description = document.getElementById('video-description').value;
+
+            // Upload video to Firebase Storage
+            const storageRef = storage.ref('videos/' + file.name);
+            storageRef.put(file).then(() => {
+                alert("Video uploaded successfully!");
+                // You can save metadata or file URL to Firestore
+            }).catch(err => {
+                console.error("Error uploading video: ", err);
+            });
+        });
+
+        // Handle Comments
+        document.getElementById('add-comment').addEventListener('click', function() {
+            const commentInput = document.getElementById('comment-input');
+            const commentText = commentInput.value;
+
+            // Save comment to Firestore under the corresponding post
+            firestore.collection('comments').add({
+                comment: commentText,
+                postId: 'your-post-id',  // Use the specific post ID
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                commentInput.value = '';  // Clear the input field
+                loadComments();
+            }).catch(err => {
+                console.error("Error adding comment: ", err);
+            });
+        });
+
+        // Load comments
+        function loadComments() {
+            firestore.collection('comments').where('postId', '==', 'your-post-id')
+                .orderBy('timestamp', 'desc').get().then(snapshot => {
+                    const commentsList = document.getElementById('comments-list');
+                    commentsList.innerHTML = '';
+                    snapshot.forEach(doc => {
+                        const comment = doc.data().comment;
+                        const commentDiv = document.createElement('div');
+                        commentDiv.classList.add('comment');
+                        commentDiv.textContent = comment;
+                        commentsList.appendChild(commentDiv);
+                    });
+                });
+        }
+
+        // Handle Reactions
+        document.getElementById('like-btn').addEventListener('click', function() {
+            alert('You liked the post!');
+            // Update reaction in Firestore
+        });
+
+        document.getElementById('love-btn').addEventListener('click', function() {
+            alert('You loved the post!');
+            // Update reaction in Firestore
+        });
+
+        document.getElementById('wow-btn').addEventListener('click', function() {
+            alert('Wow! Post!');
+            // Update reaction in Firestore
+        });
+
+        // Handle Tagging
+        document.getElementById('tag-1').addEventListener('click', function() {
+            alert('You tagged #Inspiration!');
+            // Add tagging logic here
+        });
+        document.getElementById('tag-2').addEventListener('click', function() {
+            alert('You tagged #Motivation!');
+            // Add tagging logic here
+        });
+        document.getElementById('tag-3').addEventListener('click', function() {
+            alert('You tagged #Lifestyle!');
+            // Add tagging logic here
+        });
+    </script>
+</body>
+</html>
