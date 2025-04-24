@@ -18,7 +18,7 @@
      }
  
      body {
-       font-family: 'Poppins', sans-serif;f
+       font-family: 'Poppins', sans-serif;
        font-family: 'Poppins', sans-serif;
        background: linear-gradient(135deg, #e6ecff, #ffffff);
        color: #333;
@@ -379,7 +379,7 @@
  
      <div class="create-post" id="create-post-section">
        <h3>Create a New Post</h3>
-       <input type="text" id="title" placeholder="Post Title">
+       <input type="text" id="title" placeholder="Post Title"/>
        <textarea id="content" rows="5" placeholder="What's on your mind?"></textarea>
        <input type="file" id="file-upload" multiple accept="image/*,video/*">
        <button onclick="createPost()">Post</button>
@@ -390,29 +390,36 @@
  </div>
  
  <script>
+ const firebaseConfig = {
+  apiKey: "AIzaSyAV8ID37lD9x9tUWDB9eOSe41LZ8LT6EQg",
+  authDomain: "bryan-g-ablao.firebaseapp.com",
+  projectId: "bryan-g-ablao",
+  storageBucket: "bryan-g-ablao.firebasestorage.app",
+  messagingSenderId: "735385650124",
+  appId: "1:735385650124:web:fc9fc5bc38a06359bd5369"
+};
+  
+   // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
    let currentCategory = 'home';
  
    function toggleMenu() {
-     document.getElementById('nav').classList.toggle('active');
-   }
- 
-   function createPost() {
-     const title = document.getElementById('title').value;
-     const content = document.getElementById('content').value;
-     const fileInput = document.getElementById('file-upload');
-     const files = fileInput.files;
- 
-     if (!title || !content) return alert('Please fill in all fields.');
- 
-     const readers = [];
-     for (let i = 0; i < files.length; i++) {
-       readers.push(new Promise((resolve, reject) => {
-         const reader = new FileReader();
-         reader.onload = () => resolve({ name: files[i].name, type: files[i].type, data: reader.result });
-         reader.onerror = reject;
-         reader.readAsDataURL(files[i]);
-       }));
-     }
+     function toggleMenu() {
+    document.getElementById('nav').classList.toggle('active');
+  }
+
+  function renderPosts(category) {
+    document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
+    document.querySelector(`.category-list li[data-category="${category}"]`).classList.add('active');
+    document.getElementById('category-message').textContent = `Viewing posts in "${category}" category.`;
+  }
+
+  function submitPost() {
+    alert('Post submitted (functionality to be implemented)');
+  }
  
      Promise.all(readers).then(media => {
        const post = {
@@ -705,5 +712,30 @@
      </div>
    </div>
  </div>
+
+   <!-- Your Firebase SDKs and init here -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
+
+  <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyAV8ID37lD9x9tUWDB9eOSe41LZ8LT6EQg",
+  authDomain: "bryan-g-ablao.firebaseapp.com",
+  projectId: "bryan-g-ablao",
+  storageBucket: "bryan-g-ablao.firebasestorage.app",
+  messagingSenderId: "735385650124",
+  appId: "1:735385650124:web:fc9fc5bc38a06359bd5369"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+  </script>
+</body>
+</html>
+
  </body>
  </html>
